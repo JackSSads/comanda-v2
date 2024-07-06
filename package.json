@@ -18,9 +18,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "backend": "cd comanda-menu-api && npm start",
-    "frontend": "react-scripts start",    
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
