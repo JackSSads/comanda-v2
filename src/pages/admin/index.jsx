@@ -45,22 +45,25 @@ export const Admin = () => {
                     let totalCredit = 0;
                     let totalCash = 0;
 
-                    for (let i = 0; i < result.data[0].length; i++) {
-                        let comanda = result.data[0][i]["products"].length;
+                    for (let i = 0; i < result.data[0]["comandas"].length; i++) {
+                        let check = result.data[0]["comandas"][i]["products"].length;
 
-                        lengthProduct += comanda;
+                        lengthProduct += check;
+                    };
 
-                        let pagForm = result.data[0][i]["pagForm"];
+                    for (let i = 0; i < result.data[0]["comandas"].length; i++) {
+
+                        let pagForm = result.data[0]["comandas"][i]["pagForm"];
 
                         switch (pagForm) {
                             case "pix":
-                                totalPix += result.data[0][i]["totalValue"]; break;
+                                totalPix += result.data[0]["comandas"][i]["totalValue"]; break;
                             case "dinheiro":
-                                totalCash += result.data[0][i]["totalValue"]; break;
+                                totalCash += result.data[0]["comandas"][i]["totalValue"]; break;
                             case "credito":
-                                totalCredit += result.data[0][i]["totalValue"]; break
+                                totalCredit += result.data[0]["comandas"][i]["totalValue"]; break
                             case "debito":
-                                totalDebit += result.data[0][i]["totalValue"]; break;
+                                totalDebit += result.data[0]["comandas"][i]["totalValue"]; break;
                             default: return;
                         };
                     };
