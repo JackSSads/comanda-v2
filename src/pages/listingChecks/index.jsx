@@ -191,7 +191,7 @@ export const ListingChecks = () => {
 
                             <div className="flex flex-col">
                                 <h3 className="text-slate-900 font-bold">{e.nameClient}</h3>
-                                <h3 className="text-slate-400 font-semibold">{e.obs}</h3>
+                                <h3 className="text-slate-400 font-semibold">OBS: {e.obs}</h3>
                                 <h4 className="text-slate-500 text-[15px] font-semibold">
                                     <span className="font-bold text-[#EB8F00]">Total:</span> R$ {e.totalValue.toFixed(2).replace(".", ",")}</h4>
                                 <p>{e.status ? "" : "Encerrada"}</p>
