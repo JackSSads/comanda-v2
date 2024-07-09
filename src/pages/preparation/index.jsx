@@ -201,9 +201,7 @@ export const Preparation = () => {
                                         <div className="flex flex-col mr-1">
                                             <h3 className="text-slate-900 font-semibold flex gap-1">{item.qnt}x - {item.nameProduct}</h3>
 
-                                            {item.obs ? (
-                                                <h3 className="text-slate-500 text-[15px] font-semibold">OBS: {item.obs}</h3>
-                                            ) : false}
+                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== "" ? `OBS: ${item.obs}` : ""}</h3>
                                         </div>
 
                                         <div className=" flex gap-3 border-l-2 pl-3 text-white">
@@ -228,9 +226,7 @@ export const Preparation = () => {
                                         <div className="flex flex-col mr-1">
                                             <h3 className="text-slate-900 font-semibold flex gap-1">{item.qnt}x - {item.nameProduct}</h3>
 
-                                            {item.obs ? (
-                                                <h3 className="text-slate-500 text-[15px] font-semibold">OBS: {item.obs}</h3>
-                                            ) : false}
+                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== "" ? `OBS: ${item.obs}` : ""}</h3>
                                         </div>
 
                                         <div className=" flex gap-3 border-l-2 pl-3 text-white">
