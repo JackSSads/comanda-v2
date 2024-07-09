@@ -72,8 +72,10 @@ export const CloseCheck = () => {
                     if (!result.data.status) {
                         setCheckStatus(false);
                     };
-                })
-                .catch((error) => { return toast.error(error) });
+                }).catch(() => { 
+                    toast.error("Comanda não encontrada!");
+                    return navigate("/garcom/comandas");
+                });
 
         } catch (error) {
             return toast.error(error);

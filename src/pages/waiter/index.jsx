@@ -155,9 +155,13 @@ export const Waiter = () => {
                     if (!result.data.status) {
                         setCheckStatus(false);
                     };
-                }).catch((error) => { return toast.error(`Ocorreu um erro inesperado! ${error}`); });
+                }).catch(() => { 
+                    toast.error("Comanda não encontrada!");
+                    return navigate("/garcom/comandas");
+                });
+
         } catch (error) {
-            return toast.error("Erro ao consultar o Banco de Dados");
+            return toast.error(error);
         };
     }, []);
 
