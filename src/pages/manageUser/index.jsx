@@ -193,10 +193,10 @@ export const ManageUser = () => {
                 ><Plus /> {action === "create" ? "Cadastrar usuário" : "Atualizar usuário"}</button>
 
 
-                <div className="flex flex-col gap-5 mt-10">
-                    <h2 className="w-full text-center pl-2 border-l-2 border-[#1C1D26] text-[#1C1D26] font-semibold">Todos os usuários</h2>
+                <div className="flex flex-col gap-1 mt-10">
+                    <h2 className="w-full text-center p-2 border-2 rounded-md border-[#1C1D26] text-[#1C1D26] font-semibold">Todos os usuários</h2>
 
-                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg rounded-md">
+                    <div className="mb-5 overflow-x-auto shadow-md sm:rounded-lg rounded-md">
                         <table className="w-[300px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
