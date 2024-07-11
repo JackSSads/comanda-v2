@@ -12,6 +12,7 @@ export const ListingChecks = () => {
 
     const navigate = useNavigate();
     const [rows, setRows] = useState([]);
+    const [hasCheckWhitOpen, setHasCheckWhitOpen] = useState([]);
 
     const { funcao } = useParams();
     const { isNewCheck, setIsNewCheck } = usePage();
@@ -19,6 +20,10 @@ export const ListingChecks = () => {
     useEffect(() => {
         handleChecks();
     }, [isNewCheck]);
+
+    useEffect(() => {
+        listAllCheckOpen();
+    }, [rows])
 
     // lista_novo_pedido
     useEffect(() => {
@@ -176,6 +181,29 @@ export const ListingChecks = () => {
         };
     }, []);
 
+    const listAllCheckOpen = () => {
+        const listCheck = []
+
+        rows.forEach(item => {
+
+            if (item.status) {
+                let data = {
+                    obs: item.obs,
+                    _id: item._id,
+                    status: item.status,
+                    pagForm: item.pagForm,
+                    products: item.products,
+                    nameClient: item.nameClient,
+                    totalValue: item.totalValue,
+                };
+
+                listCheck.push(data);
+            };
+
+        });
+        setHasCheckWhitOpen(listCheck);
+    };
+
     return (
         <>
             <Navbar title={`Todas as comandas`} isLogout />
@@ -185,13 +213,13 @@ export const ListingChecks = () => {
             ) : (
                 <div className="w-[95%] min-h-[90vh] py-3 px-5 rounded-xl flex items-center flex-col gap-5">
                     <Toaster />
-                    {rows.length > 0 ? rows.map((e) => (
+                    {hasCheckWhitOpen.length ? hasCheckWhitOpen.map((e) => (
                         <div className={` ${e.status ? "flex" : "hidden"}  justify-between items-center my-3 px-5 py-3 w-full rounded-xl bg-slate-100/20 shadow-md`}
                             key={e._id}>
 
                             <div className="flex flex-col">
                                 <h3 className="text-slate-900 font-bold">{e.nameClient}</h3>
-                                <h3 className="text-slate-400 font-semibold">{e.obs !== "" ? `OBS: ${e.obs}`: ""}</h3>
+                                <h3 className="text-slate-400 font-semibold">{e.obs !== "" ? `OBS: ${e.obs}` : ""}</h3>
                                 <h4 className="text-slate-500 text-[15px] font-semibold">
                                     <span className="font-bold text-[#EB8F00]">Total:</span> R$ {e.totalValue.toFixed(2).replace(".", ",")}</h4>
                                 <p>{e.status ? "" : "Encerrada"}</p>
