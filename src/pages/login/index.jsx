@@ -7,6 +7,8 @@ import { LoginService } from "../../service/login/LoginService";
 
 export const Login = () => {
 
+    const nameProject = process.env.REACT_APP_BASE_NAME_SISTEM
+
     const navigate = useNavigate();
 
     const [value, setValue] = useState({
@@ -68,7 +70,7 @@ export const Login = () => {
 
     return (
         <div className="h-full w-full">
-            <Navbar title="Dunas Comandas" />
+            <Navbar title={nameProject} />
             <div className="h-full flex justify-center items-center flex-col">
                 <Toaster />
                 <div className="mb-4">
