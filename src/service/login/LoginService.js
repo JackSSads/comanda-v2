@@ -5,18 +5,7 @@ const login = async (data) => {
         const res = await API.post("/login", data);
 
         if (res) {
-
-            if (res.data.status) {
-
-                const auth = res.data.status;
-
-                sessionStorage.setItem('auth', auth);
-
-                return res.data;
-
-            } else {
-                sessionStorage.setItem('auth', false)
-            };
+            return res.data;
         };
 
         return new Error("Erro ao realizar login!");
