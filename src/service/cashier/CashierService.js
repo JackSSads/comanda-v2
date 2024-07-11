@@ -28,9 +28,9 @@ const getById = async (id) => {
     };
 };
 
-const create = async (data) => {
+const create = async () => {
     try {
-        const res = await API.post("/caixa", data);
+        const res = await API.post("/caixa");
 
         if (res) {
             return res.data;
