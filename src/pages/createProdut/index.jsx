@@ -35,8 +35,7 @@ export const CreateProdut = () => {
         try {
             ProdutService.create(data)
                 .then((result) => {
-
-                    console.log(result)
+                    
                     if (result.status) {
                         toast.success(result.message);
                     };
