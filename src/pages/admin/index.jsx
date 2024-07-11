@@ -86,10 +86,9 @@ export const Admin = () => {
         try {
             CashierService.deleteById(checkId);
             CheckService.deleteAll();
-            CashierService.getAll();
+            CashierService.create();
 
             screenshotCashier();
-            navigate("/garcom/comandas");
         } catch (error) {
             return toast.error(error);
         };
@@ -110,6 +109,8 @@ export const Admin = () => {
 
             document.body.removeChild(link);
         });
+
+        getAllCashier();
     };
 
     const printCashier = () => {
