@@ -168,8 +168,6 @@ export const CloseCheck = () => {
                 totalValue: totalValueCalculed,
                 status: false
             };
-            
-            console.log(obj)
 
             CashierService.updateById(cashierId, obj);
 
