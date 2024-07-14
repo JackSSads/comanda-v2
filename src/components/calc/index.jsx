@@ -16,12 +16,13 @@ export const Calc = ({ visibilityCalc }) => {
                 return;
             };
 
-            const result = eval(calculo);
+            const result = parseFloat(eval(calculo)).toFixed(2);
 
             setCalculo(`${result}`);
 
         } catch (SyntaxError) {
             toast.error("Esse calculo está mal feito!", { duration: 1200 });
+            setCalculo("0");
         };
     };
 
