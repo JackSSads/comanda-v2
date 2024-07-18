@@ -8,6 +8,8 @@ import socket from "../../service/socket";
 
 export const Preparation = () => {
 
+    const nameProject = process.env.REACT_APP_BASE_NAME_SISTEM
+
     const { funcao } = useParams();
 
     const [allChecks, setAllChecks] = useState([]);
@@ -194,14 +196,14 @@ export const Preparation = () => {
                         {e.products.map((item, index) => (
                             <div key={index} className="flex justify-between items-center w-full">
 
-                                {funcao === "barmen" && item.category === "Bebida" && item.status ? (
+                                {funcao === "barmen" && (item.category === "Bebida" || (nameProject === "avanti" && item.category === "Drink")) && item.status ? (
 
                                     <div className="flex justify-between items-center w-full mb-5 border-b-2 pb-2">
 
                                         <div className="flex flex-col mr-1">
                                             <h3 className="text-slate-900 font-semibold flex gap-1">{item.qnt}x - {item.nameProduct}</h3>
 
-                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== undefined ? `OBS: ${item.obs}` : ""}</h3>
+                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== "" ? `OBS: ${item.obs}` : ""}</h3>
                                         </div>
 
                                         <div className=" flex gap-3 border-l-2 pl-3 text-white">
@@ -214,7 +216,7 @@ export const Preparation = () => {
                                 ) : false}
 
                                 {funcao === "cozinha" && (
-                                    item.category === "Drink" ||
+                                    (nameProject !== "avanti" && item.category === "Drink") ||
                                     item.category === "Porcao" ||
                                     item.category === "Petisco" ||
                                     item.category === "Refeicao" ||
@@ -226,7 +228,7 @@ export const Preparation = () => {
                                         <div className="flex flex-col mr-1">
                                             <h3 className="text-slate-900 font-semibold flex gap-1">{item.qnt}x - {item.nameProduct}</h3>
 
-                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== undefined ? `OBS: ${item.obs}` : ""}</h3>
+                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== "" ? `OBS: ${item.obs}` : ""}</h3>
                                         </div>
 
                                         <div className=" flex gap-3 border-l-2 pl-3 text-white">
