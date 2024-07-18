@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { usePage } from "../../contexts";
+import { LogoutService } from "../../service/logout/LogoutService";
 import { useConnectionMonitor } from "../../hooks/connectionMonitor"
 
 import { Back, ArrowRight } from "../../libs/icons";
@@ -20,8 +21,10 @@ export const Navbar = ({ title, url, isLogout }) => {
     };
 
     const logout = () => {
-        sessionStorage.removeItem("auth");
-        navigate("/login");
+        LogoutService.logout()
+        .then(() => {
+            return navigate("/login");
+        });
     };
 
     return (
