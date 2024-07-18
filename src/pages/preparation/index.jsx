@@ -74,7 +74,7 @@ export const Preparation = () => {
                         onClick={() => toast.dismiss(t.id)}
                     >OK</button>
                 </div>
-            ), { duration: 1000000 });
+            ), { duration: 10000 });
 
             getAllChecks();
 
@@ -201,7 +201,7 @@ export const Preparation = () => {
                                         <div className="flex flex-col mr-1">
                                             <h3 className="text-slate-900 font-semibold flex gap-1">{item.qnt}x - {item.nameProduct}</h3>
 
-                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== "" ? `OBS: ${item.obs}` : ""}</h3>
+                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== undefined ? `OBS: ${item.obs}` : ""}</h3>
                                         </div>
 
                                         <div className=" flex gap-3 border-l-2 pl-3 text-white">
@@ -226,7 +226,7 @@ export const Preparation = () => {
                                         <div className="flex flex-col mr-1">
                                             <h3 className="text-slate-900 font-semibold flex gap-1">{item.qnt}x - {item.nameProduct}</h3>
 
-                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== "" ? `OBS: ${item.obs}` : ""}</h3>
+                                            <h3 className="text-slate-500 text-[15px] font-semibold">{item.obs !== undefined ? `OBS: ${item.obs}` : ""}</h3>
                                         </div>
 
                                         <div className=" flex gap-3 border-l-2 pl-3 text-white">
