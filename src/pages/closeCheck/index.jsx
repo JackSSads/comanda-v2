@@ -9,6 +9,8 @@ import socket from "../../service/socket";
 
 export const CloseCheck = () => {
 
+    const nameProject = process.env.REACT_APP_BASE_NAME_SISTEM
+
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -72,7 +74,7 @@ export const CloseCheck = () => {
                     if (!result.data.status) {
                         setCheckStatus(false);
                     };
-                }).catch(() => { 
+                }).catch(() => {
                     toast.error("Comanda não encontrada!");
                     return navigate("/garcom/comandas");
                 });
@@ -153,12 +155,12 @@ export const CloseCheck = () => {
     const cancelCheck = () => {
 
         try {
-            
+
             let totalValueCalculed = 0;
-            
+
             for (let i = 0; i < cashier.length; i++) {
                 let soma = cashier[i]["totalValue"];
-                
+
                 totalValueCalculed += soma;
             };
 
@@ -207,9 +209,11 @@ export const CloseCheck = () => {
                     <h2 className="mt-5 text-center text-slate-900 font-bold text-[22px]">
                         Consumo: <span className="text-slate-500">R$ {parseFloat(totalValue).toFixed(2).replace(".", ",")}</span>
                     </h2>
-                    <h2 className="flex flex-col mt-5 text-center text-slate-900 font-bold text-[28px]">
-                        Total + 10%: <span className="text-slate-500">R$ {parseFloat(totalValue * 1.1).toFixed(2).replace(".", ",")}</span>
-                    </h2>
+                    {nameProject !== "avanti" && (
+                        <h2 className="flex flex-col mt-5 text-center text-slate-900 font-bold text-[28px]">
+                            Total + 10%: <span className="text-slate-500">R$ {parseFloat(totalValue * 1.1).toFixed(2).replace(".", ",")}</span>
+                        </h2>
+                    )}
                 </div>
 
                 <label className="flex flex-col text-slate-900 text-[20px] font-semibold">
@@ -239,11 +243,11 @@ export const CloseCheck = () => {
                         value=""
                         name="default-radio"
                         onClick={() => alterVisibilityCalc()}
-                        className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500  focus:ring-2 "/>
+                        className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500  focus:ring-2 " />
                     <label htmlFor="default-radio-2" className="ms-2 text-sm font-medium text-gray-900">{visibilityCalc ? 'Cal. Aberta' : 'Calc. Fechada'}</label>
                 </div>
-                
-                <Calc visibilityCalc={visibilityCalc}/>
+
+                <Calc visibilityCalc={visibilityCalc} />
 
                 <button className=" w-[250px] p-3 font-semibold rounded-xl bg-red-600 text-white transition-all delay-75"
                     onClick={() => cancelCheck()}
