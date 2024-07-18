@@ -78,7 +78,7 @@ export const ListingChecks = () => {
                     <div className="flex gap-3">
                         <div className="flex flex-col justify-center items-center">
                             <h6 className="text-center">Pedido <span className="font-semibold">{data.nameProduct}</span> pronto na comanda</h6>
-                            <span className="font-semibold">{data.client}</span>
+                            <span className="font-semibold">{data.nameClient}</span>
                         </div>
                         <button className="bg-[#EB8F00] text-white rounded-md p-2"
                             onClick={() => toast.dismiss(t.id)}
