@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 export const useConnectionMonitor = () => {
-
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     useEffect(() => {
@@ -18,6 +17,12 @@ export const useConnectionMonitor = () => {
         window.addEventListener('online', handleOnline);
         window.addEventListener('offline', handleOffline);
 
+        if (navigator.onLine) {
+            changeNavbarColor('#EB8F00');
+        } else {
+            changeNavbarColor('#dc2626');
+        };
+
         return () => {
             window.removeEventListener('online', handleOnline);
             window.removeEventListener('offline', handleOffline);
@@ -33,7 +38,7 @@ export const useConnectionMonitor = () => {
             meta.name = 'theme-color';
             meta.content = color;
             document.head.appendChild(meta);
-        };
+        }
     };
 
     return isOnline;
