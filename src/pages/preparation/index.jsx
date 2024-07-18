@@ -209,7 +209,7 @@ export const Preparation = () => {
                                         <div className=" flex gap-3 border-l-2 pl-3 text-white">
                                             <button className="flex gap-1 font-semibold rounded-xl p-3 bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
                                                 disabled={!item.status}
-                                                onClick={() => orderReady(indexCheck, item.nameProduct, e.nameClient, item._id, e._id)}
+                                                onClick={() => orderReady(indexCheck, item.nameProduct, e.nameClient, index, e._id)}
                                             >{item.status ? "Pronto" : "Finalizado"}</button>
                                         </div>
                                     </div>
