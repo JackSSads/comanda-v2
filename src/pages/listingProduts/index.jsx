@@ -71,6 +71,11 @@ export const ListingProduts = () => {
     const addProduct = (_id) => {
         listProducts.forEach(item => {
             if (item._id === _id) {
+
+                if (addProductsTiket.findIndex(product => product._id === _id) !== -1) {
+                    return toast("Esse item já foi adicionado", { icon: "🤨", duration: 1200 });
+                };
+
                 const newList = [item, ...addProductsTiket];
 
                 setAddProductsTiket(newList);
@@ -81,12 +86,16 @@ export const ListingProduts = () => {
     };
 
     //remover item da lista
-    const removeProduct = (id) => {
+    const removeProduct = (_id) => {
 
-        const newValeu = addProductsTiket.filter(product => product["_id"] !== id);
+        if (addProductsTiket.findIndex(product => product._id === _id) === -1) {
+            return toast("Esse item nem foi adicionado", { icon: "🤨", duration: 1200 });
+        };
+
+        const newValeu = addProductsTiket.filter(product => product._id !== _id);
         setAddProductsTiket(newValeu);
 
-        toast("Removido", { icon: "🙄", duration: 1200 });
+        return toast("Removido", { icon: "🙄", duration: 1200 });
     };
 
     // Adicionar obsevação a item
@@ -102,8 +111,9 @@ export const ListingProduts = () => {
             objCloned.obs = value;
             newList[objEditedIndex] = objCloned;
             setAddProductsTiket(newList);
+            return;
         } else {
-            toast.error("Primeiro + adicione o produto!", { duration: 1000 });
+            return toast.error("Primeiro + adicione o produto!", { duration: 1000 });
         };
     };
 
@@ -161,10 +171,12 @@ export const ListingProduts = () => {
 
         try {
             CheckService.updateById(id, data)
-                .then(() => { navigate(`/garcom/comanda/${id}`); })
+                .then(() => {
+                    socket.emit("novo_pedido", client);
+                    navigate(`/garcom/comanda/${id}`);
+                })
                 .catch((error) => { return toast.error(`Ocorreu um erro inesperado! ${error}`); });
 
-            socket.emit("novo_pedido", client);
         } catch (error) {
             return toast.error("Ocorreu um erro inesperado!");
         };
@@ -179,7 +191,7 @@ export const ListingProduts = () => {
             <Navbar title={`Produtos`} url={`/garcom/comanda/${id}`} />
             <div className="w-[95%] min-h-[85vh] pt-3 pb-[200px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
-                <div className="fixed bottom-0 flex flex-col items-center justify-center w-full  bg-[#EB8F00]/95 p-1 text-slate-100">
+                <div className="fixed bottom-0 flex flex-col items-center justify-center w-full  bg-[#EB8F00] p-1 text-slate-100">
 
                     {addProductsTiket.length ? (
                         <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> produtos</h5>
@@ -205,43 +217,45 @@ export const ListingProduts = () => {
                     </label>
                 </div>
 
-                {itensFiltrados.map((iten, index) => (
+                {itensFiltrados.map((item, index) => (
                     <div key={index} className="flex justify-between items-center px-3 py-5 w-full rounded-xl shadow-md">
 
                         <div className="w-2/3 flex flex-col items-start">
-                            <h3 className="text-slate-900 font-bold">{iten.nameProduct}</h3>
-                            <h3 className="text-slate-500 text-[15px] font-semibold">R$ {iten.value.toFixed(2).replace(".", ",")}</h3>
-                            <label >
-                                <input
-                                    type="text" placeholder="Observação"
-                                    className="w-full mt-1 border border-slate-500 rounded-[5px] p-1"
-                                    onChange={(e) => obsProduct(iten._id, e.target.value)}
-                                />
-                            </label>
+                            <h3 className="text-slate-900 font-bold">{item.nameProduct}</h3>
+                            <h3 className="text-slate-500 text-[15px] font-semibold">R$ {item.value.toFixed(2).replace(".", ",")}</h3>
+                            {addProductsTiket.findIndex(product => product._id === item._id) !== -1 && (
+                                <label >
+                                    <input
+                                        type="text" placeholder="Observação"
+                                        className="w-full mt-1 border border-slate-500 rounded-[5px] p-1"
+                                        onChange={(e) => obsProduct(item._id, e.target.value)}
+                                    />
+                                </label>
+                            )}
                         </div>
 
                         <div className="h-full ml-5 flex items-center justify-center gap-5 border-l-2 pl-5">
                             <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500 rounded-md">
                                 <button className="p-1 border-t-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
-                                    onClick={() => alterQnt(iten._id, "-")}
+                                    onClick={() => alterQnt(item._id, "-")}
                                 ><Minus /></button>
 
                                 <p className="text-[#EB8F00] font-somibold">
-                                    {addProductsTiket.find(product => product._id === iten._id)?.qnt || 0}
+                                    {addProductsTiket.find(product => product._id === item._id)?.qnt || 0}
                                 </p>
 
                                 <button className="p-1 border-b-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
-                                    onClick={() => alterQnt(iten._id, "+")}
+                                    onClick={() => alterQnt(item._id, "+")}
                                 ><Plus /></button>
                             </div>
 
                             <div className="flex gap-5 flex-col">
                                 <button className="text-[#1C1D26] p-2 rounded-md border-2 hover:text-blue-500 hover:border-blue-500 transition-all delay-75"
-                                    onClick={() => addProduct(iten._id)}
+                                    onClick={() => addProduct(item._id)}
                                 ><Plus /></button>
 
                                 <button className="text-[#1C1D26] p-2 rounded-md border-2 hover:text-red-600 hover:border-red-600 transition-all delay-75"
-                                    onClick={() => removeProduct(iten._id)}
+                                    onClick={() => removeProduct(item._id)}
                                 ><Delete /></button>
                             </div>
                         </div>
