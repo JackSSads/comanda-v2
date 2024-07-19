@@ -143,7 +143,7 @@ export const ManageUser = () => {
 
     return (
         <>
-            <Navbar title={"Cadastro de produtos"} url={"/admin"} />
+            <Navbar title={"Usuários"} url={"/admin"} />
             <div className="mx-10 flex justify-center items-center flex-col gap-5">
                 <Toaster />
                 <label className="text-slate-700 text-sm font-bold mb-2">
