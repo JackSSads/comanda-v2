@@ -196,7 +196,7 @@ export const Preparation = () => {
                         {e.products.map((item, index) => (
                             <div key={index} className="flex justify-between items-center w-full">
 
-                                {funcao === "barmen" && (item.category === "Bebida" || (nameProject === "avanti" && item.category === "Drink")) && item.status ? (
+                                {funcao === "barmen" && item.category === "Drink" && item.status ? (
 
                                     <div className="flex justify-between items-center w-full mb-5 border-b-2 pb-2">
 
