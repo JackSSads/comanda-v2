@@ -155,7 +155,7 @@ export const Waiter = () => {
                     if (!result.data.status) {
                         setCheckStatus(false);
                     };
-                }).catch(() => { 
+                }).catch(() => {
                     toast.error("Comanda não encontrada!");
                     return navigate("/garcom/comandas");
                 });
@@ -171,16 +171,16 @@ export const Waiter = () => {
         const objEdited = newList.find(product => product._id === _id);
         let objCloned = { ...objEdited };
 
+        let obj = {}
+
         if (action === "+") {
             objCloned.qnt += 1;
             toast("+1", { icon: "😎", duration: 1200 });
-            const data = { client, product: objEdited, action: "+1" };
-            socket.emit("alterar_quantidade", data);
+            obj = { client, product: objEdited, action: "+1" };
         } else if (action === "-" && qnt > 1) {
             objCloned.qnt -= 1;
             toast("-1", { icon: "😒", duration: 1200 });
-            const data = { client, product: objEdited, action: "-1" };
-            socket.emit("alterar_quantidade", data);
+            obj = { client, product: objEdited, action: "-1" };
         };
 
         objCloned.totalPrice = objCloned.qnt * objCloned.value;
@@ -195,7 +195,11 @@ export const Waiter = () => {
 
         try {
             await CheckService.updateById(id, data)
-            setTotalPrice(newTotalPrice.toFixed(2).replace(".", ","));
+                .then(() => {
+                    socket.emit("alterar_quantidade", obj);
+                    setTotalPrice(newTotalPrice.toFixed(2).replace(".", ","));
+                })
+                .catch((error) => { toast.error(error) });
 
         } catch (error) {
             toast.error("Ocorreu um erro inesperado!");
@@ -236,7 +240,7 @@ export const Waiter = () => {
 
     return (
         <>
-            <Navbar title={`Cliente: ${client}`} url={checkStatus ? `/${funcao}/comandas` : "/comandasFinalizadas"} isLogout={false} />
+            <Navbar title={`${client}`} url={checkStatus ? `/${funcao}/comandas` : "/comandasFinalizadas"} isLogout={false} />
 
             <div className="w-[95%] min-h-[85vh] pt-3 pb-[190px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
@@ -299,7 +303,7 @@ export const Waiter = () => {
                 ><Plus /> Adicionar item</button>
             </div>
 
-            <Footer id={id} totalValue={totalPrice}/>
+            <Footer id={id} totalValue={totalPrice} />
         </>
     );
 };
