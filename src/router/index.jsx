@@ -6,7 +6,8 @@ import {
     Admin,
     Login,
     ListingChecks,
-    Preparation,
+    Bartender,
+    Cousine,
     Waiter,
     ListingProduts,
     CloseCheck,
@@ -23,14 +24,21 @@ export const AppRoutes = () => {
         <Routes>
             <Route path="/login" element={<Login />} />
 
-            <Route path={`/:funcao/comandas`} element={
+            <Route path={`/garcom/comandas`} element={
                 <PrivateRoute>
                     <ListingChecks />
                 </PrivateRoute>
             } />
-            <Route path={`/:funcao/producao`} element={
+
+            <Route path={`/cozinha/producao`} element={
                 <PrivateRoute>
-                    <Preparation />
+                    <Cousine />
+                </PrivateRoute>
+            } />
+
+            <Route path={`/barmen/producao`} element={
+                <PrivateRoute>
+                    <Bartender />
                 </PrivateRoute>
             } />
 
