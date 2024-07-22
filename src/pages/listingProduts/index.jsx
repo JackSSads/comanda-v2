@@ -169,10 +169,15 @@ export const ListingProduts = () => {
             status: true
         };
 
+        const objSocket = {
+            client,
+            products: addProductsTiket
+        }
+
         try {
             CheckService.updateById(id, data)
                 .then(() => {
-                    socket.emit("novo_pedido", client);
+                    socket.emit("novo_pedido", objSocket);
                     navigate(`/garcom/comanda/${id}`);
                 })
                 .catch((error) => { return toast.error(`Ocorreu um erro inesperado! ${error}`); });
