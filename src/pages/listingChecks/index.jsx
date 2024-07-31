@@ -14,7 +14,6 @@ export const ListingChecks = () => {
     const [rows, setRows] = useState([]);
     const [hasCheckWhitOpen, setHasCheckWhitOpen] = useState([]);
 
-    const { funcao } = useParams();
     const { isNewCheck, setIsNewCheck } = usePage();
 
     useEffect(() => {
@@ -73,20 +72,18 @@ export const ListingChecks = () => {
     // produto_pronto
     useEffect(() => {
         socket.on("produto_pronto", (data) => {
-            if (funcao === "garcom") {
-                toast((t) => (
-                    <div className="flex gap-3">
-                        <div className="flex flex-col justify-center items-center">
-                            <h6 className="text-center">Pedido <span className="font-semibold">{data.nameProduct}</span> pronto na comanda</h6>
-                            <span className="font-semibold">{data.nameClient}</span>
-                        </div>
-                        <button className="bg-[#EB8F00] text-white rounded-md p-2"
-                            onClick={() => toast.dismiss(t.id)}
-                        >OK</button>
+            toast((t) => (
+                <div className="flex gap-3">
+                    <div className="flex flex-col justify-center items-center">
+                        <h6 className="text-center">Pedido <span className="font-semibold">{data.nameProduct}</span> pronto na comanda</h6>
+                        <span className="font-semibold">{data.nameClient}</span>
                     </div>
-                ), { duration: 1000000 });
-                handleChecks();
-            };
+                    <button className="bg-[#EB8F00] text-white rounded-md p-2"
+                        onClick={() => toast.dismiss(t.id)}
+                    >OK</button>
+                </div>
+            ), { duration: 1000000 });
+            handleChecks();
         });
 
         return () => { socket.off("produto_pronto") };
@@ -115,43 +112,19 @@ export const ListingChecks = () => {
     // alterar_quantidade
     useEffect(() => {
         socket.on("alterar_quantidade", (data) => {
-
-            if ((data.product.category === "Bebida" || data.product.category === "Drink" || data.product.category === "Dose")
-                && funcao === "barmen") {
-
-                toast((t) => (
-                    <div className="flex gap-3">
-                        <div className="flex flex-col items-center">
-                            <h6><span className="font-semibold">{data.action} {data.product.nameProduct}</span> na comanda</h6>
-                            <span className="font-semibold">{data.client}</span>
-                        </div>
-                        <button className="bg-[#EB8F00] text-white rounded-md p-2"
-                            onClick={() => toast.dismiss(t.id)}
-                        >OK</button>
+            toast((t) => (
+                <div className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                        <h6><span className="font-semibold">{data.action} {data.product.nameProduct}</span> na comanda</h6>
+                        <span className="font-semibold">{data.client}</span>
                     </div>
-                ), { duration: 1000000 });
+                    <button className="bg-[#EB8F00] text-white rounded-md p-2"
+                        onClick={() => toast.dismiss(t.id)}
+                    >OK</button>
+                </div>
+            ), { duration: 1000000 });
 
-                handleChecks();
-
-                return () => { socket.off("alterar_quantidade") };
-            } else if (data.product.category === "Petisco" && funcao === "churrasqueiro") {
-
-                toast((t) => (
-                    <div className="flex gap-3">
-                        <div className="flex flex-col items-center">
-                            <h6><span className="font-semibold">{data.action} {data.product.nameProduct}</span> na comanda</h6>
-                            <span className="font-semibold">{data.client}</span>
-                        </div>
-                        <button className="bg-[#EB8F00] text-white rounded-md p-2"
-                            onClick={() => toast.dismiss(t.id)}
-                        >OK</button>
-                    </div>
-                ), { duration: 1000000 });
-
-                handleChecks();
-
-                return () => { socket.off("alterar_quantidade") };
-            };
+            handleChecks();
 
             return () => { socket.off("alterar_quantidade") };
         });
@@ -226,7 +199,7 @@ export const ListingChecks = () => {
                             </div>
 
                             <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                                onClick={() => navigate(`/${funcao}/comanda/${e._id}`)}
+                                onClick={() => navigate(`/garcom/comanda/${e._id}`)}
                                 disabled={!e.status}
                             ><Plus /></button>
                         </div>

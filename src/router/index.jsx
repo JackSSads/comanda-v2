@@ -42,7 +42,7 @@ export const AppRoutes = () => {
                 </PrivateRoute>
             } />
 
-            <Route path={`/:funcao/comanda/:id`} element={
+            <Route path={`/garcom/comanda/:id`} element={
                 <PrivateRoute>
                     <Waiter />
                 </PrivateRoute>

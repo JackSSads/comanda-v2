@@ -50,7 +50,7 @@ export const ShowEditProducts = () => {
 
     return (
         <>
-            <Navbar title={"Edite Produtos"} url={"/admin"} />
+            <Navbar title={"Meus Produtos"} url />
             <div className="w-[95%] min-h-[85vh] pt-3 pb-[190px] px-3 rounded-xl flex items-center flex-col gap-6">
 
                 <Toaster />

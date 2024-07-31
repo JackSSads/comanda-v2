@@ -27,7 +27,7 @@ export const ClosedChecks = () => {
 
     return (
         <>
-            <Navbar title={`Comandas Fechadas`} url={`/admin`} />
+            <Navbar title={`Comandas Fechadas`} url />
 
             <div className="w-[95%] min-h-[90vh] py-3 px-5 rounded-xl flex items-center flex-col gap-5">
                 <Toaster />

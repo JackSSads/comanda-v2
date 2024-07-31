@@ -17,7 +17,7 @@ export const Navbar = ({ title, url, isLogout }) => {
     const navigate = useNavigate();
 
     const backOldPage = () => {
-        navigate(url);
+        navigate(-1);
     };
 
     const logout = () => {

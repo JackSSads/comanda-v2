@@ -11,7 +11,7 @@ export const Waiter = () => {
 
     const navigate = useNavigate();
 
-    const { id, funcao } = useParams();
+    const { id } = useParams();
 
     const [listProducts, setListProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -135,7 +135,7 @@ export const Waiter = () => {
             ), { duration: 2000 });
 
             if (data.id === id) {
-                navigate(`/${funcao}/comandas`);
+                navigate(`/garcom/comandas`);
             };
             getCheckById();
         });
@@ -240,7 +240,7 @@ export const Waiter = () => {
 
     return (
         <>
-            <Navbar title={`${client}`} url={checkStatus ? `/${funcao}/comandas` : "/comandasFinalizadas"} isLogout={false} />
+            <Navbar title={`${client}`} url />
 
             <div className="w-[95%] min-h-[85vh] pt-3 pb-[190px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
@@ -248,7 +248,7 @@ export const Waiter = () => {
                     {listProducts.map((e, index) => (
                         <div key={index} className="flex justify-between items-center px-3 py-5 w-full bg-slate-100/20 rounded-xl shadow-md">
                             <div className="flex flex-col mr-1">
-                                <h3 className="text-slate-900 font-bold flex gap-1">{funcao !== "garcom" && (<span>{e.qnt}x - </span>)}{e.nameProduct}</h3>
+                                <h3 className="text-slate-900 font-bold flex gap-1"><span>{e.qnt}x - </span> {e.nameProduct}</h3>
 
                                 <h4 className="text-slate-500 text-[15px] font-semibold">R$ {e.totalPrice.toFixed(2).replace(".", ",")}</h4>
 
@@ -303,7 +303,7 @@ export const Waiter = () => {
                 ><Plus /> Adicionar item</button>
             </div>
 
-            <Footer id={id} totalValue={totalPrice} />
+            <Footer id={id} totalValue={totalPrice} checkStatus={checkStatus} />
         </>
     );
 };

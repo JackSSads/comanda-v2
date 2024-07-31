@@ -61,7 +61,7 @@ export const EditProduct = () => {
 
     return (
         <>
-            <Navbar title={`Edite o produto`} url={"/editeProduto"} />
+            <Navbar title={`Edite o produto`} url />
 
             <div className="mx-10 flex justify-center items-center flex-col gap-5">
                 <Toaster />

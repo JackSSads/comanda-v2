@@ -193,7 +193,7 @@ export const ListingProduts = () => {
 
     return (
         <>
-            <Navbar title={`Produtos`} url={`/garcom/comanda/${id}`} />
+            <Navbar title={`Produtos`} url />
             <div className="w-[95%] min-h-[85vh] pt-3 pb-[200px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
                 <div className="fixed bottom-0 flex flex-col items-center justify-center w-full  bg-[#EB8F00] p-1 text-slate-100">
