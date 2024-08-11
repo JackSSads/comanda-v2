@@ -13,13 +13,10 @@ import {
     CloseCheck,
     ClosedChecks,
     ManageUser,
-    CreateProdut,
-    EditProduct,
     ShowEditProducts,
 } from "../pages";
 
 export const AppRoutes = () => {
-
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
