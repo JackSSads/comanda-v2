@@ -2,15 +2,17 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRoutes } from "./router";
 
 import { LayoutBase } from "./layouts"
-import { PageProvider } from "./contexts";
+import { PageProvider, ToggleViewProvider } from "./contexts";
 
 export const App = () => {
   return (
     <BrowserRouter>
       <PageProvider>
-        <LayoutBase title="comandas" url="comandas">
-          <AppRoutes />
-        </LayoutBase>
+        <ToggleViewProvider>
+          <LayoutBase title="comandas" url="comandas">
+            <AppRoutes />
+          </LayoutBase>
+        </ToggleViewProvider>
       </PageProvider>
     </BrowserRouter>
   );
