@@ -3,12 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 import { Navbar } from "../../components/navbar";
-import { Plus, Delete, Minus, Close } from "../../libs/icons";
+import { Plus, Delete, Minus, Close, ClipBoard } from "../../libs/icons";
 import { ProdutService } from "../../service/produt/ProdutService";
 import { CheckService } from "../../service/check/CheckService";
 import socket from "../../service/socket";
+import { ListinProductsForCheck } from "../../components/listinProductsForCheck";
+import { useToggleView } from "../../contexts"
 
 export const ListingProduts = () => {
+
+    const { toggleView, setToggleView } = useToggleView()
 
     const navigate = useNavigate();
 
@@ -196,17 +200,23 @@ export const ListingProduts = () => {
             <Navbar title={`Produtos`} url />
             <div className="w-[95%] min-h-[85vh] pt-3 pb-[200px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
-                <div className="fixed bottom-0 flex flex-col items-center justify-center w-full  bg-[#EB8F00] p-1 text-slate-100">
+                <ListinProductsForCheck products={addProductsTiket} />
+                <div className="fixed bottom-0 flex items-center justify-center w-full bg-[#EB8F00] p-1 text-center text-slate-100">
+                    <div className="flex flex-col w-2/3">
+                        {addProductsTiket.length ? (
+                            <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> produtos</h5>
+                        ) : (
+                            <h5 className="text-xl my-3">Adicione items para a comanda</h5>
+                        )}
 
-                    {addProductsTiket.length ? (
-                        <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> produtos</h5>
-                    ) : (
-                        <h5 className="text-xl my-3">Adicione items para a comanda</h5>
-                    )}
-
-                    <button className="w-1/2 flex justify-center gap-1 p-3 rounded-md text-white font-semibold bg-[#171821] hover:text-[#171821] border-2 border-transparent hover:border-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                        onClick={() => postProducts()}
-                    >Adicionar</button>
+                        <button className="p-3 rounded-md text-white font-semibold bg-[#171821] hover:text-[#171821] border-2 border-transparent hover:border-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
+                            onClick={() => {postProducts(); setToggleView(false)}}
+                        >Adicionar</button>
+                    </div>
+                    { addProductsTiket.length > 0 &&
+                        <button className="fixed bottom-1 right-3" onClick={() => setToggleView(!toggleView)}
+                        ><ClipBoard /></button>
+                    }
                 </div>
 
                 <div className="px-3 py-5 w-full rounded-xl shadow-md">
