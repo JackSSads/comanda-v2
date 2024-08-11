@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 import { Navbar } from "../../components";
+import { useToggleView } from "../../contexts";
+import { ModalProduct } from "../../components";
 import { Delete, Edit, Close } from "../../libs/icons";
 import { ProdutService } from "../../service/produt/ProdutService";
 
@@ -10,16 +11,19 @@ export const ShowEditProducts = () => {
 
     const [listProducts, setListProducts] = useState([]);
 
+    const { toggleView, setToggleView } = useToggleView()
+
     // Estado que armazena o termo de filtro digitado
     const [filtro, setFiltro] = useState("");
 
-    const navigate = useNavigate();
+    const [idProduct, setIdProduct] = useState(null);
+    const [action, setAction] = useState(null);
 
     useEffect(() => {
         getAllProducts();
-    }, []);
+    }, [toggleView]);
 
-    const getAllProducts = useCallback( async () => {
+    const getAllProducts = useCallback(async () => {
         try {
             await ProdutService.getAll()
                 .then((result) => { setListProducts(result.data); })
@@ -44,6 +48,12 @@ export const ShowEditProducts = () => {
         };
     };
 
+    const haldletoggleViewModal = (action, _id) => {
+        setAction(action);
+        setIdProduct(_id);
+        setToggleView(true);
+    };
+
     const itensFiltrados = listProducts.filter(item =>
         item.nameProduct.toLowerCase().includes(filtro.toLowerCase())
     );
@@ -52,8 +62,8 @@ export const ShowEditProducts = () => {
         <>
             <Navbar title={"Meus Produtos"} url />
             <div className="w-[95%] min-h-[85vh] pt-3 pb-[190px] px-3 rounded-xl flex items-center flex-col gap-6">
-
                 <Toaster />
+                <ModalProduct action={action} id={idProduct} />
 
                 <div className="flex flex-col-reverse justify-center gap-5 px-3 py-5 w-full rounded-xl shadow-md">
                     <label className="flex gap-2 items-center">
@@ -67,7 +77,7 @@ export const ShowEditProducts = () => {
                         <i onClick={() => setFiltro("")}><Close /></i>
                     </label>
                     <button className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] hover:text-[#1C1d26] bg-[#1C1D26] transition-all delay-75"
-                        onClick={() => navigate("/novoProduto")}
+                        onClick={() => haldletoggleViewModal("new")}
                     >Novo Poduto</button>
                 </div>
 
@@ -86,7 +96,7 @@ export const ShowEditProducts = () => {
 
                         <div className="flex gap-8 border-l-2 pl-3">
                             <button className=" text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
-                                onClick={() => navigate(`/editeProduto/${e._id}`)}
+                                onClick={() => haldletoggleViewModal("edit", e._id)}
                             ><Edit /></button>
 
                             <button className=" text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
@@ -95,7 +105,6 @@ export const ShowEditProducts = () => {
                         </div>
                     </div>
                 ))}
-
             </div>
         </>
     );
