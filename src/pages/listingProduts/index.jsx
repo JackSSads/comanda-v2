@@ -207,7 +207,7 @@ export const ListingProduts = () => {
                         {addProductsTiket.length ? (
                             <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> produtos</h5>
                         ) : (
-                            <h5 className="text-xl my-3">Adicione items para a comanda</h5>
+                            <h5 className="text-xl my-3">Adicione produtos</h5>
                         )}
 
                         <button className="p-3 rounded-md text-white font-semibold bg-[#171821] hover:text-[#171821] border-2 border-transparent hover:border-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
