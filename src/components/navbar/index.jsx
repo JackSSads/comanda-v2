@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { usePage } from "../../contexts";
+import { usePage, useToggleView } from "../../contexts";
 import { LogoutService } from "../../service/logout/LogoutService";
 import { useConnectionMonitor } from "../../hooks/connectionMonitor"
 
@@ -13,18 +13,21 @@ export const Navbar = ({ title, url, isLogout }) => {
     const logoutButton = !!isLogout;
 
     const { isNewCheck } = usePage();
+    const { setToggleView } = useToggleView();
 
     const navigate = useNavigate();
 
     const backOldPage = () => {
+        setToggleView(false);
         navigate(-1);
     };
 
     const logout = () => {
         LogoutService.logout()
-        .then(() => {
-            return navigate("/login");
-        });
+            .then(() => {
+                setToggleView(false);
+                return navigate("/login");
+            });
     };
 
     return (
