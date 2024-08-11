@@ -36,6 +36,7 @@ export const ListingProduts = () => {
     const [filtro, setFiltro] = useState("");
 
     useEffect(() => {
+        setToggleView(false);
         getAllProducts();
         getCheckById();
     }, []);
