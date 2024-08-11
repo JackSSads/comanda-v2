@@ -253,7 +253,7 @@ export const Waiter = () => {
                                 <h4 className="text-slate-500 text-[15px] font-semibold">R$ {e.totalPrice.toFixed(2).replace(".", ",")}</h4>
 
                                 {e.obs ? (
-                                    <h3 className="text-slate-500 text-[15px] font-semibold">OBS: {e.obs}</h3>
+                                    <h3 className="text-slate-500 text-[15px] font-semibold"><span className="text-[#EB8F00]">OBS</span>: {e.obs}</h3>
                                 ) : false}
 
                                 {e.status ? (
