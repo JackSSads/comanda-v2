@@ -137,7 +137,7 @@ export const Admin = () => {
                 <div className="flex justify-between bg-slate-100/20 py-5 px-1 w-[97%] my-10 rounded-md shadow-md gap-1">
 
                     <button className="w-1/3 font-semibold text-white py-2 rounded-md hover:bg-[#EB8F00] hover:text-[#1C1d26] bg-[#1C1D26] transition-all delay-75"
-                        onClick={() => navigate("/editeProduto")}
+                        onClick={() => navigate("/produtos")}
                     >Produtos</button>
 
                     <button className="w-1/3 font-semibold text-white py-2 rounded-md hover:bg-[#EB8F00] hover:text-[#1C1d26] bg-[#1C1D26] transition-all delay-75"
