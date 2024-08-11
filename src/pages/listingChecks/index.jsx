@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-import { usePage } from "../../contexts";
+import { useToggleView } from "../../contexts";
 import { Plus } from "../../libs/icons";
 import { Navbar, NewCheck } from "../../components";
 import { CheckService } from "../../service/check/CheckService";
@@ -14,11 +14,11 @@ export const ListingChecks = () => {
     const [rows, setRows] = useState([]);
     const [hasCheckWhitOpen, setHasCheckWhitOpen] = useState([]);
 
-    const { isNewCheck, setIsNewCheck } = usePage();
+    const { toggleView, setToggleView } = useToggleView();
 
     useEffect(() => {
         handleChecks();
-    }, [isNewCheck]);
+    }, [toggleView]);
 
     useEffect(() => {
         listAllCheckOpen();
@@ -211,13 +211,13 @@ export const ListingChecks = () => {
                         </div>
 
                         <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                            onClick={() => setIsNewCheck(true)}
+                            onClick={() => setToggleView(true)}
                         ><Plus /></button>
                     </div>
                 )}
 
                 <button className="mt-[100px] flex gap-1 font-semibold rounded-xl p-3 bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                    onClick={() => setIsNewCheck(true)}
+                    onClick={() => setToggleView(true)}
                 ><Plus /> Nova comanda</button>
             </div>
         </>

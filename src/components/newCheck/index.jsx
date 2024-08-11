@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import toast, { Toaster } from "react-hot-toast";
 
-import { usePage } from "../../contexts";
 import { Close } from "../../libs/icons";
-import { CheckService } from "../../service/check/CheckService";
 import socket from "../../service/socket";
+import { useToggleView } from "../../contexts";
+import { CheckService } from "../../service/check/CheckService";
 
 export const NewCheck = () => {
 
@@ -16,12 +16,11 @@ export const NewCheck = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const { isNewCheck, setIsNewCheck } = usePage();
+    const { toggleView, setToggleView } = useToggleView();
 
     const handleInput = (field, event) => {
         setValue(prev => ({ ...prev, [field]: event.target.value }));
     };
-
 
     const createCheck = () => {
         if (value.nameClient === "") {
@@ -45,7 +44,7 @@ export const NewCheck = () => {
                     .then((result) => {
                         if (result.status) {
                             socket.emit("nova_comanda", data);
-                            setIsNewCheck(false);
+                            setToggleView(false);
                             return;
                         };
 
@@ -58,15 +57,17 @@ export const NewCheck = () => {
     };
 
     return (
-        <div className={`${isNewCheck ? "block" : "hidden"} fixed top-0 left-0 h-[100dvh] w-[100vw] bg-slate-950/50 py-3 px-1 flex flex-col justify-center items-center gap-5`}>
+        <div className={`${toggleView ? "block" : "hidden"} fixed top-0 left-0 h-[100dvh] w-[100vw] bg-slate-950/50 py-3 px-1 flex flex-col justify-center items-center gap-5`}>
             <Toaster />
-            <div className="h-[300px] w-[350px] rounded-md border border-hidden bg-[#1C1D26] py-10 flex flex-col justify-between items-center text-slate-100">
-
+            <div className="h-[300px] w-[300px] rounded-md border-hidden bg-white pb-10 flex flex-col justify-between items-center overflow-hidden">
+                <div className="p-5 bg-[#EB8F00] w-full">
+                    <h6 className="text-white text-center font-bold uppercase text-[18px]">Nova comanda</h6>
+                </div>
                 <div className="flex flex-col items-center gap-3">
 
-                    <label className="w-[270px] text-sm font-bold mb-2 text-slate-400">
+                    <label className="w-[270px] text-sm font-bold mb-2 text-[#1C1D26]">
                         <input
-                            className="text-white bg-transparent border border-[#393636] rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="text-[#1C1D26] bg-transparent border border-[#393636] rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             id="nameClient"
                             name="nameClient"
@@ -77,9 +78,9 @@ export const NewCheck = () => {
                         />
                     </label>
 
-                    <label className="w-[270px] text-sm font-bold mb-2 text-slate-400">
+                    <label className="w-[270px] text-sm font-bold mb-2 text-[#1C1D26]">
                         <input
-                            className="text-white bg-transparent border border-[#393636] rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="text-[#1C1D26] bg-transparent border border-[#393636] rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             id="indicacao"
                             name="obs"
@@ -97,8 +98,8 @@ export const NewCheck = () => {
                 >Cadastrar</button>
             </div>
 
-            <button className="text-white p-2 rounded-md font-semibold bg-[#1C1D26] hover:text-[#1C1D26] hover:bg-[#EB8F00]"
-                onClick={() => setIsNewCheck(false)}
+            <button className="flex justify-center p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+                onClick={() => setToggleView(false)}
             ><Close /></button>
 
         </div>

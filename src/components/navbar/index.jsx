@@ -1,19 +1,18 @@
 import { useNavigate } from "react-router-dom";
 
-import { usePage, useToggleView } from "../../contexts";
+import { useToggleView } from "../../contexts";
 import { LogoutService } from "../../service/logout/LogoutService";
-import { useConnectionMonitor } from "../../hooks/connectionMonitor"
+import { useConnectionMonitor } from "../../hooks/connectionMonitor";
 
 import { Back, ArrowRight } from "../../libs/icons";
 
 export const Navbar = ({ title, url, isLogout }) => {
 
-    const isOnline = useConnectionMonitor()
+    const isOnline = useConnectionMonitor();
 
     const logoutButton = !!isLogout;
 
-    const { isNewCheck } = usePage();
-    const { setToggleView } = useToggleView();
+    const { toggleView, setToggleView } = useToggleView();
 
     const navigate = useNavigate();
 
@@ -32,7 +31,6 @@ export const Navbar = ({ title, url, isLogout }) => {
 
     return (
         <nav className={`fixed top-0 w-full h-16 px-5 flex ${url ? "justify-between" : logout ? "justify-between" : "justify-center"} items-center bg-[#EB8F00] text-slate-100`}>
-
             <div>
                 {!isOnline ? (
                     <h2 className={`transition-all delay-200 uppercase bg-red-600 px-3 py-2 rounded-md font-bold text-white`}>Sem internet</h2>
@@ -47,7 +45,7 @@ export const Navbar = ({ title, url, isLogout }) => {
                 ><Back /></button>
                 : false}
 
-            {(logoutButton && !isNewCheck) ?
+            {(logoutButton && !toggleView) ?
                 <button className="px-3 py-2 rounded-md border-2 border-red-600 bg-red-600 hover:text-red-600 hover:bg-transparent text-white transition-all delay-75"
                     onClick={logout}
                 ><ArrowRight /></button>
