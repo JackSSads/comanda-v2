@@ -10,7 +10,7 @@ export const ListinProductsForCheck = ({ products }) => {
                 <div className="p-5 bg-[#EB8F00] w-full border border-[#EB8F00]">
                     <h6 className="text-white text-center font-bold uppercase text-[18px]">Serão adicionados</h6>
                 </div>
-                <ul className="max-w-[90%] flex gap-5 mt-5 flex-col divide-y divide-dashed divide-slate-700">
+                <ul className="max-w-[90%] flex gap-5 my-5 flex-col divide-y divide-dashed divide-slate-700">
                     {products.map((product, index) => (
                         <li key={index}
                             className="w-[100%] flex justify-between gap-5 text-slate-700 font-semibold">
