@@ -214,7 +214,7 @@ export const ListingProduts = () => {
                         >Adicionar</button>
                     </div>
                     { addProductsTiket.length > 0 &&
-                        <button className="fixed bottom-1 right-3" onClick={() => setToggleView(!toggleView)}
+                        <button className="fixed bottom-1 right-1" onClick={() => setToggleView(!toggleView)}
                         ><ClipBoard /></button>
                     }
                 </div>
