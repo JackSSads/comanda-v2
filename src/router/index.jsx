@@ -74,19 +74,9 @@ export const AppRoutes = () => {
                 </PrivateRoute>
             } />
 
-            <Route path={`/novoProduto`} element={
-                <PrivateRoute>
-                    <CreateProdut />
-                </PrivateRoute>
-            } />
-            <Route path={`/editeProduto`} element={
+            <Route path={`/produtos`} element={
                 <PrivateRoute>
                     <ShowEditProducts />
-                </PrivateRoute>
-            } />
-            <Route path={`/editeProduto/:id`} element={
-                <PrivateRoute>
-                    <EditProduct />
                 </PrivateRoute>
             } />
 
