@@ -266,31 +266,31 @@ export const Waiter = () => {
                             <div className=" flex gap-3 border-l-2 pl-3 text-white">
 
                                 {e.status ? (
-                                    <div className="flex gap-3 border-2 border-slate-500 rounded-md">
-                                        <button className="border-r-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
+                                    <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500 rounded-md">
+                                        <button className="p-1 border-t-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
                                             onClick={() => alterQnt(e._id, "-", e.qnt)}
                                         ><Minus /></button>
 
                                         <p className="text-[#EB8F00] font-somibold">{e.qnt}</p>
 
-                                        <button className="border-l-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
+                                        <button className="p-1 border-b-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
                                             onClick={() => alterQnt(e._id, "+")}
                                         ><Plus /></button>
                                     </div>
                                 ) : (
 
-                                    <div className="flex gap-3 border-2 border-slate-500/30 rounded-md">
-                                        <button className="border-r-2 border-slate-500/30 text-slate-900/30"
+                                    <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500/30 rounded-md">
+                                        <button className="p-1 border-t-2 border-slate-500/30 text-slate-900/30"
                                         ><Minus /></button>
 
                                         <p className="text-[#EB8F00] font-somibold">{e.qnt}</p>
 
-                                        <button className="border-l-2 border-slate-500/30 text-slate-900/30"
+                                        <button className="p-1 border-b-2 border-slate-500/30 text-slate-900/30"
                                         ><Plus /></button>
                                     </div>
                                 )}
 
-                                <button className=" text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
+                                <button className="text-[#1C1D26] p-2 rounded-md border-2 hover:text-red-600 hover:border-red-600 transition-all delay-75"
                                     onClick={() => deleteItem(index)}
                                 ><Delete /></button>
                             </div>
