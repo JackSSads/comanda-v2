@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
+import { useToggleView } from "../../contexts";
 import { Navbar, Footer } from "../../components";
 import { Delete, Plus, Minus } from "../../libs/icons";
 import { CheckService } from "../../service/check/CheckService";
@@ -13,12 +14,15 @@ export const Waiter = () => {
 
     const { id } = useParams();
 
+    const { setToggleView } = useToggleView();
+
     const [listProducts, setListProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [client, setClient] = useState("");
     const [checkStatus, setCheckStatus] = useState(true);
 
     useEffect(() => {
+        setToggleView(false);
         getCheckById();
     }, [totalPrice, id]);
 
