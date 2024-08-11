@@ -58,7 +58,7 @@ export const NewCheck = () => {
     };
 
     return (
-        <div className={`h-[80vh] py-3 px-1 flex flex-col justify-center items-center gap-5 ${isNewCheck ? "" : "hidden"}`}>
+        <div className={`${isNewCheck ? "block" : "hidden"} fixed top-0 left-0 h-[100dvh] w-[100vw] bg-slate-950/50 py-3 px-1 flex flex-col justify-center items-center gap-5`}>
             <Toaster />
             <div className="h-[300px] w-[350px] rounded-xl border border-hidden bg-[#1C1D26] py-10 flex flex-col justify-between items-center text-slate-100">
 

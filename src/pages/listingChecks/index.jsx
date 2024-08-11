@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 import { usePage } from "../../contexts";
@@ -180,50 +180,46 @@ export const ListingChecks = () => {
     return (
         <>
             <Navbar title={`Todas as comandas`} isLogout />
-
-            {isNewCheck ? (
+            <div className="w-[95%] min-h-[90vh] py-3 px-5 rounded-xl flex items-center flex-col gap-5">
                 <NewCheck />
-            ) : (
-                <div className="w-[95%] min-h-[90vh] py-3 px-5 rounded-xl flex items-center flex-col gap-5">
-                    <Toaster />
-                    {hasCheckWhitOpen.length ? hasCheckWhitOpen.map((e) => (
-                        <div className={` ${e.status ? "flex" : "hidden"}  justify-between items-center my-3 px-5 py-3 w-full rounded-xl bg-slate-100/20 shadow-md`}
-                            key={e._id}>
+                <Toaster />
+                {hasCheckWhitOpen.length ? hasCheckWhitOpen.map((e) => (
+                    <div className={` ${e.status ? "flex" : "hidden"}  justify-between items-center my-3 px-5 py-3 w-full rounded-xl bg-slate-100/20 shadow-md`}
+                        key={e._id}>
 
-                            <div className="flex flex-col">
-                                <h3 className="text-slate-900 font-bold">{e.nameClient}</h3>
-                                <h3 className="text-slate-400 font-semibold">{e.obs !== "" ? `OBS: ${e.obs}` : ""}</h3>
-                                <h4 className="text-slate-500 text-[15px] font-semibold">
-                                    <span className="font-bold text-[#EB8F00]">Total:</span> R$ {e.totalValue.toFixed(2).replace(".", ",")}</h4>
-                                <p>{e.status ? "" : "Encerrada"}</p>
-                            </div>
-
-                            <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                                onClick={() => navigate(`/garcom/comanda/${e._id}`)}
-                                disabled={!e.status}
-                            ><Plus /></button>
+                        <div className="flex flex-col">
+                            <h3 className="text-slate-900 font-bold">{e.nameClient}</h3>
+                            <h3 className="text-slate-400 font-semibold">{e.obs !== "" ? `OBS: ${e.obs}` : ""}</h3>
+                            <h4 className="text-slate-500 text-[15px] font-semibold">
+                                <span className="font-bold text-[#EB8F00]">Total:</span> R$ {e.totalValue.toFixed(2).replace(".", ",")}</h4>
+                            <p>{e.status ? "" : "Encerrada"}</p>
                         </div>
-                    )) : (
-                        <div className="flex justify-between items-center my-3 px-5 py-3 w-full rounded-xl shadow-md">
 
-                            <div className="flex flex-col">
-                                <h3 className="text-slate-900 font-bold">Você não possui comandas em aberto</h3>
-                                <h3 className="text-slate-400 font-semibold">Clique em + Nova comanda</h3>
-                                <h4 className="text-slate-500 text-[15px] font-semibold">
-                                    <span className="font-bold text-[#EB8F00]">Total:</span> R$ 0,00</h4>
-                            </div>
+                        <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
+                            onClick={() => navigate(`/garcom/comanda/${e._id}`)}
+                            disabled={!e.status}
+                        ><Plus /></button>
+                    </div>
+                )) : (
+                    <div className="flex justify-between items-center my-3 px-5 py-3 w-full rounded-xl shadow-md">
 
-                            <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                                onClick={() => setIsNewCheck(true)}
-                            ><Plus /></button>
+                        <div className="flex flex-col">
+                            <h3 className="text-slate-900 font-bold">Você não possui comandas em aberto</h3>
+                            <h3 className="text-slate-400 font-semibold">Clique em + Nova comanda</h3>
+                            <h4 className="text-slate-500 text-[15px] font-semibold">
+                                <span className="font-bold text-[#EB8F00]">Total:</span> R$ 0,00</h4>
                         </div>
-                    )}
 
-                    <button className="mt-[100px] flex gap-1 font-semibold rounded-xl p-3 bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                        onClick={() => setIsNewCheck(true)}
-                    ><Plus /> Nova comanda</button>
-                </div>
-            )}
+                        <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
+                            onClick={() => setIsNewCheck(true)}
+                        ><Plus /></button>
+                    </div>
+                )}
+
+                <button className="mt-[100px] flex gap-1 font-semibold rounded-xl p-3 bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
+                    onClick={() => setIsNewCheck(true)}
+                ><Plus /> Nova comanda</button>
+            </div>
         </>
     );
 };
