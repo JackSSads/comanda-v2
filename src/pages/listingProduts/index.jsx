@@ -199,7 +199,7 @@ export const ListingProduts = () => {
     return (
         <>
             <Navbar title={`Produtos`} url />
-            <div className="w-[95%] min-h-[85vh] pt-3 pb-[200px] px-3 rounded-xl flex items-center flex-col gap-10">
+            <div className="w-[95%] min-h-[85vh] pb-[200px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
                 <ListinProductsForCheck products={addProductsTiket} />
                 <div className="fixed bottom-0 flex items-center justify-center w-full bg-[#EB8F00] p-1 text-center text-slate-100">
@@ -224,12 +224,12 @@ export const ListingProduts = () => {
                     <label className="flex gap-2 items-center">
                         <input
                             type="text"
-                            className="w-full border rounded-xl p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="w-full border-2 rounded-xl p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Buscar produto..."
                             onChange={(e) => setFiltro(e.target.value)}
                             value={filtro}
                         />
-                        <button type="button" className="border rounded-xl p-[10px] hover:text-red-600 hover:border-red-600">
+                        <button type="button" className="border-2 rounded-xl p-[10px] hover:text-red-600 hover:border-red-600 transition-all delay-75">
                             <i onClick={() => setFiltro("")}><Close /></i>
                         </button>
                     </label>

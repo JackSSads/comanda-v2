@@ -246,61 +246,59 @@ export const Waiter = () => {
         <>
             <Navbar title={`${client}`} url />
 
-            <div className="w-[95%] min-h-[85vh] pt-3 pb-[190px] px-3 rounded-xl flex items-center flex-col gap-10">
+            <div className="w-[95%] min-h-[85vh] pb-[190px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
-                <>
-                    {listProducts.map((e, index) => (
-                        <div key={index} className="flex justify-between items-center px-3 py-1 w-full bg-slate-100/20 rounded-xl shadow-md">
-                            <div className="flex flex-col mr-1">
-                                <h3 className="text-slate-900 font-bold flex gap-1"><span>{e.qnt}x - </span> {e.nameProduct}</h3>
+                {listProducts.map((e, index) => (
+                    <div key={index} className="flex justify-between items-center px-3 py-1 w-full bg-slate-100/20 rounded-xl shadow-md">
+                        <div className="flex flex-col mr-1">
+                            <h3 className="text-slate-900 font-bold flex gap-1"><span>{e.qnt}x - </span> {e.nameProduct}</h3>
 
-                                <h4 className="text-slate-500 text-[15px] font-semibold">R$ {e.totalPrice.toFixed(2).replace(".", ",")}</h4>
+                            <h4 className="text-slate-500 text-[15px] font-semibold">R$ {e.totalPrice.toFixed(2).replace(".", ",")}</h4>
 
-                                {e.obs ? (
-                                    <h3 className="text-slate-500 text-[15px] font-semibold"><span className="text-[#EB8F00]">OBS</span>: {e.obs}</h3>
-                                ) : false}
+                            {e.obs ? (
+                                <h3 className="text-slate-500 text-[15px] font-semibold"><span className="text-[#EB8F00]">OBS</span>: {e.obs}</h3>
+                            ) : false}
 
-                                {e.status ? (
-                                    false
-                                ) :
-                                    <h3 className="text-slate-500 text-[15px] font-semibold">Pedido Pronto</h3>
-                                }
-                            </div>
-
-                            <div className=" flex gap-2 border-l-2 pl-3 text-white">
-
-                                {e.status ? (
-                                    <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500 rounded-md">
-                                        <button className="p-1 border-t-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
-                                            onClick={() => alterQnt(e._id, "-", e.qnt)}
-                                        ><Minus /></button>
-
-                                        <p className="text-[#EB8F00] font-somibold">{e.qnt}</p>
-
-                                        <button className="p-1 border-b-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
-                                            onClick={() => alterQnt(e._id, "+")}
-                                        ><Plus /></button>
-                                    </div>
-                                ) : (
-
-                                    <div className="flex flex-col-reverse items-center border-2 border-slate-500/30 rounded-md">
-                                        <button className="p-1 border-t-2 border-slate-500/30 text-slate-900/30"
-                                        ><Minus /></button>
-
-                                        <p className="text-[#EB8F00] font-somibold">{e.qnt}</p>
-
-                                        <button className="p-1 border-b-2 border-slate-500/30 text-slate-900/30"
-                                        ><Plus /></button>
-                                    </div>
-                                )}
-
-                                <button className="text-[#1C1D26] p-2 rounded-md border-2 hover:text-red-600 hover:border-red-600 transition-all delay-75"
-                                    onClick={() => deleteItem(index)}
-                                ><Delete /></button>
-                            </div>
+                            {e.status ? (
+                                false
+                            ) :
+                                <h3 className="text-slate-500 text-[15px] font-semibold">Pedido Pronto</h3>
+                            }
                         </div>
-                    ))}
-                </>
+
+                        <div className=" flex gap-2 border-l-2 pl-3 text-white">
+
+                            {e.status ? (
+                                <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500 rounded-md">
+                                    <button className="p-1 border-t-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
+                                        onClick={() => alterQnt(e._id, "-", e.qnt)}
+                                    ><Minus /></button>
+
+                                    <p className="text-[#EB8F00] font-somibold">{e.qnt}</p>
+
+                                    <button className="p-1 border-b-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
+                                        onClick={() => alterQnt(e._id, "+")}
+                                    ><Plus /></button>
+                                </div>
+                            ) : (
+
+                                <div className="flex flex-col-reverse items-center border-2 border-slate-500/30 rounded-md">
+                                    <button className="p-1 border-t-2 border-slate-500/30 text-slate-900/30"
+                                    ><Minus /></button>
+
+                                    <p className="text-[#EB8F00] font-somibold">{e.qnt}</p>
+
+                                    <button className="p-1 border-b-2 border-slate-500/30 text-slate-900/30"
+                                    ><Plus /></button>
+                                </div>
+                            )}
+
+                            <button className="text-[#1C1D26] p-2 rounded-md border-2 hover:text-red-600 hover:border-red-600 transition-all delay-75"
+                                onClick={() => deleteItem(index)}
+                            ><Delete /></button>
+                        </div>
+                    </div>
+                ))}
 
                 <button className="mt-[30px] flex gap-1 p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
                     onClick={() => navigate(`/garcom/comanda/${id}/add-product`)}
