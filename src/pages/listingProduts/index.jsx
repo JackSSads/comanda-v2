@@ -234,7 +234,7 @@ export const ListingProduts = () => {
                 </div>
 
                 {itensFiltrados.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center px-3 py-5 w-full rounded-xl shadow-md">
+                    <div key={index} className="flex justify-between items-center px-3 py-1 w-full rounded-xl shadow-md">
 
                         <div className="w-2/3 flex flex-col items-start">
                             <h3 className="text-slate-900 font-bold">{item.nameProduct}</h3>
@@ -250,7 +250,7 @@ export const ListingProduts = () => {
                             )}
                         </div>
 
-                        <div className="h-full ml-5 flex items-center justify-center gap-5 border-l-2 pl-5">
+                        <div className="h-full ml-5 flex items-center justify-center gap-3 border-l-2 pl-3">
                             <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500 rounded-md">
                                 <button className="p-1 border-t-2 border-slate-500 text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
                                     onClick={() => alterQnt(item._id, "-")}
@@ -265,7 +265,7 @@ export const ListingProduts = () => {
                                 ><Plus /></button>
                             </div>
 
-                            <div className="flex gap-5 flex-col">
+                            <div className="flex gap-4 flex-col">
                                 <button className="text-[#1C1D26] p-2 rounded-md border-2 hover:text-blue-500 hover:border-blue-500 transition-all delay-75"
                                     onClick={() => addProduct(item._id)}
                                 ><Plus /></button>

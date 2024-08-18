@@ -250,7 +250,7 @@ export const Waiter = () => {
                 <Toaster />
                 <>
                     {listProducts.map((e, index) => (
-                        <div key={index} className="flex justify-between items-center px-3 py-5 w-full bg-slate-100/20 rounded-xl shadow-md">
+                        <div key={index} className="flex justify-between items-center px-3 py-1 w-full bg-slate-100/20 rounded-xl shadow-md">
                             <div className="flex flex-col mr-1">
                                 <h3 className="text-slate-900 font-bold flex gap-1"><span>{e.qnt}x - </span> {e.nameProduct}</h3>
 
@@ -267,7 +267,7 @@ export const Waiter = () => {
                                 }
                             </div>
 
-                            <div className=" flex gap-3 border-l-2 pl-3 text-white">
+                            <div className=" flex gap-2 border-l-2 pl-3 text-white">
 
                                 {e.status ? (
                                     <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500 rounded-md">
@@ -283,7 +283,7 @@ export const Waiter = () => {
                                     </div>
                                 ) : (
 
-                                    <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500/30 rounded-md">
+                                    <div className="flex flex-col-reverse items-center border-2 border-slate-500/30 rounded-md">
                                         <button className="p-1 border-t-2 border-slate-500/30 text-slate-900/30"
                                         ><Minus /></button>
 
