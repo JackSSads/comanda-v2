@@ -211,10 +211,10 @@ export const ListingProduts = () => {
                         )}
 
                         <button className="p-3 rounded-md text-white font-semibold bg-[#171821] hover:text-[#171821] border-2 border-transparent hover:border-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
-                            onClick={() => {postProducts(); setToggleView(false)}}
+                            onClick={() => { postProducts(); setToggleView(false) }}
                         >Adicionar</button>
                     </div>
-                    { addProductsTiket.length > 0 &&
+                    {addProductsTiket.length > 0 &&
                         <button className="fixed bottom-1 right-1" onClick={() => setToggleView(!toggleView)}
                         ><ClipBoard /></button>
                     }
@@ -229,7 +229,9 @@ export const ListingProduts = () => {
                             onChange={(e) => setFiltro(e.target.value)}
                             value={filtro}
                         />
-                        <i onClick={() => setFiltro("")}><Close /></i>
+                        <button type="button" className="border rounded-xl p-[10px] hover:text-red-600 hover:border-red-600">
+                            <i onClick={() => setFiltro("")}><Close /></i>
+                        </button>
                     </label>
                 </div>
 
