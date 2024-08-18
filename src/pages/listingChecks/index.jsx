@@ -184,7 +184,7 @@ export const ListingChecks = () => {
                 <NewCheck />
                 <Toaster />
                 {hasCheckWhitOpen.length ? hasCheckWhitOpen.map((e) => (
-                    <div className={` ${e.status ? "flex" : "hidden"}  justify-between items-center my-3 px-5 py-3 w-full rounded-xl bg-slate-100/20 shadow-md`}
+                    <div className={` ${e.status ? "flex" : "hidden"} border justify-between items-center my-3 px-5 py-3 w-full rounded-xl bg-slate-100/20 shadow-md`}
                         key={e._id}>
 
                         <div className="flex flex-col">
@@ -201,7 +201,7 @@ export const ListingChecks = () => {
                         ><Plus /></button>
                     </div>
                 )) : (
-                    <div className="flex justify-between items-center my-3 px-5 py-3 w-full rounded-xl shadow-md">
+                    <div className="border flex justify-between items-center my-3 px-5 py-3 w-full rounded-xl shadow-md">
 
                         <div className="flex flex-col">
                             <h3 className="text-slate-900 font-bold">Você não possui comandas em aberto</h3>

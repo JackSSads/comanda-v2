@@ -266,7 +266,7 @@ export const Waiter = () => {
                             }
                         </div>
 
-                        <div className=" flex gap-2 border-l-2 pl-3 text-white">
+                        <div className="flex gap-2 border-l-2 pl-3 text-white">
 
                             {e.status ? (
                                 <div className="flex flex-col-reverse items-center gap-1 border-2 border-slate-500 rounded-md">

@@ -220,7 +220,7 @@ export const ListingProduts = () => {
                     }
                 </div>
 
-                <div className="px-3 py-5 w-full rounded-xl shadow-md">
+                <div className="border px-3 py-5 w-full rounded-xl shadow-md">
                     <label className="flex gap-2 items-center">
                         <input
                             type="text"
@@ -236,7 +236,7 @@ export const ListingProduts = () => {
                 </div>
 
                 {itensFiltrados.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center px-3 py-1 w-full rounded-xl shadow-md">
+                    <div key={index} className="border flex justify-between items-center px-3 py-1 w-full rounded-xl shadow-md">
 
                         <div className="w-2/3 flex flex-col items-start">
                             <h3 className="text-slate-900 font-bold">{item.nameProduct}</h3>

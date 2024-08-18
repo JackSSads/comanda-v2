@@ -1,6 +1,6 @@
 export const LayoutBase = ({ children }) => {
     return (
-        <div className="min-h-[100vh] pt-[75px] flex justify-center items-center">
+        <div className="min-h-[100dvh] pt-5 flex justify-center items-center">
             {children}
         </div>
     );

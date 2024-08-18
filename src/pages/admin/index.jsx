@@ -132,7 +132,7 @@ export const Admin = () => {
     return (
         <>
             <Navbar title={"Resumo do dia"} isLogout />
-            <div className="w-full flex flex-col items-center">
+            <div className="w-full pt-5 flex flex-col items-center">
                 <Toaster />
                 <div className="flex justify-between bg-slate-100/20 py-5 px-1 w-[97%] my-10 rounded-md shadow-md gap-1">
 
