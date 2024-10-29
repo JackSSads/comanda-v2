@@ -10,14 +10,15 @@ import { ProdutService } from "../../service/produt/ProdutService";
 export const ShowEditProducts = () => {
 
     const [listProducts, setListProducts] = useState([]);
+    const { toggleView, setToggleView } = useToggleView();
 
-    const { toggleView, setToggleView } = useToggleView()
-
-    // Estado que armazena o termo de filtro digitado
     const [filtro, setFiltro] = useState("");
-
     const [idProduct, setIdProduct] = useState(null);
     const [action, setAction] = useState(null);
+
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
 
     useEffect(() => {
         getAllProducts();
@@ -58,6 +59,12 @@ export const ShowEditProducts = () => {
         item.nameProduct.toLowerCase().includes(filtro.toLowerCase())
     );
 
+    // Pagination calculations
+    const totalItems = itensFiltrados.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentItems = itensFiltrados.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <>
             <Navbar title={"Meus Produtos"} url />
@@ -74,18 +81,20 @@ export const ShowEditProducts = () => {
                             onChange={(e) => setFiltro(e.target.value)}
                             value={filtro}
                         />
-                        <i onClick={() => setFiltro("")}><Close /></i>
+                        <button type="button" className="border-2 rounded-xl p-[10px] hover:text-red-600 hover:border-red-600 transition-all delay-75">
+                            <i onClick={() => setFiltro("")}><Close /></i>
+                        </button>
                     </label>
                     <button className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] hover:text-[#1C1d26] bg-[#1C1D26] transition-all delay-75"
                         onClick={() => haldletoggleViewModal("new")}
-                    >Novo Poduto</button>
+                    >Novo Produto</button>
                 </div>
 
-                {itensFiltrados.length === 0 && (
-                    <div className="font-semibold text-xl">Nem um produto foi encontrado</div>
+                {currentItems.length === 0 && (
+                    <div className="font-semibold text-xl">Nenhum produto foi encontrado</div>
                 )}
 
-                {itensFiltrados.map((e) => (
+                {currentItems.map((e) => (
                     <div key={e._id} className="border flex justify-between bg-slate-100/20 items-center px-3 py-2 w-full rounded-xl shadow-md">
 
                         <div className="w-2/3 flex flex-col items-start">
@@ -105,6 +114,25 @@ export const ShowEditProducts = () => {
                         </div>
                     </div>
                 ))}
+
+                {/* Pagination Controls */}
+                <div className="flex gap-3 mt-5">
+                    <button
+                        className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        Anterior
+                    </button>
+                    <span>{currentPage} de {totalPages}</span>
+                    <button
+                        className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    >
+                        Próxima
+                    </button>
+                </div>
             </div>
         </>
     );
