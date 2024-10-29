@@ -35,6 +35,10 @@ export const ListingProduts = () => {
     // Estado que armazena o termo de filtro digitado
     const [filtro, setFiltro] = useState("");
 
+    // Pagination states
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
     useEffect(() => {
         setToggleView(false);
         getAllProducts();
@@ -196,16 +200,22 @@ export const ListingProduts = () => {
         item.nameProduct.toLowerCase().includes(filtro.toLowerCase())
     );
 
+    // Pagination calculations
+    const totalItems = itensFiltrados.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentItems = itensFiltrados.slice(startIndex, startIndex + itemsPerPage);
+
     return (
         <>
             <Navbar title={`Produtos`} url />
             <div className="w-[95%] min-h-[85vh] pb-[200px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
-                <ListinProductsForCheck products={addProductsTiket} />
+                <ListinProductsForCheck products={currentItems} />
                 <div className="fixed bottom-0 flex items-center justify-center w-full bg-[#EB8F00] p-1 text-center text-slate-100">
                     <div className="flex flex-col w-2/3">
-                        {addProductsTiket.length ? (
-                            <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> produtos</h5>
+                        {currentItems.length ? (
+                            <h5 className="text-xl my-3"><span className="font-bold">{currentItems.length}</span> produtos</h5>
                         ) : (
                             <h5 className="text-xl my-3">Adicione produtos</h5>
                         )}
@@ -214,7 +224,7 @@ export const ListingProduts = () => {
                             onClick={() => { postProducts(); setToggleView(false) }}
                         >Adicionar</button>
                     </div>
-                    {addProductsTiket.length > 0 &&
+                    {currentItems.length > 0 &&
                         <button className="fixed bottom-1 right-1" onClick={() => setToggleView(!toggleView)}
                         ><ClipBoard /></button>
                     }
@@ -235,7 +245,7 @@ export const ListingProduts = () => {
                     </label>
                 </div>
 
-                {itensFiltrados.map((item, index) => (
+                {currentItems.map((item, index) => (
                     <div key={index} className="flex justify-between items-center px-3 py-1 w-full rounded-xl shadow-md">
 
                         <div className="w-2/3 flex flex-col items-start">
@@ -279,6 +289,23 @@ export const ListingProduts = () => {
                         </div>
                     </div>
                 ))}
+                <div className="flex gap-3 mt-5">
+                    <button
+                        className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        Anterior
+                    </button>
+                    <span>{currentPage} de {totalPages}</span>
+                    <button
+                        className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    >
+                        Próxima
+                    </button>
+                </div>
             </div>
         </>
     );
