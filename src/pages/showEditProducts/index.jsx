@@ -115,24 +115,25 @@ export const ShowEditProducts = () => {
                     </div>
                 ))}
 
-                {/* Pagination Controls */}
-                <div className="flex gap-3 mt-5">
-                    <button
-                        className="px-3 py-1 border rounded-lg hover:bg-slate-200"
-                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                        disabled={currentPage === 1}
-                    >
-                        Anterior
-                    </button>
-                    <span>{currentPage} de {totalPages}</span>
-                    <button
-                        className="px-3 py-1 border rounded-lg hover:bg-slate-200"
-                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                        disabled={currentPage === totalPages}
-                    >
-                        Próxima
-                    </button>
-                </div>
+                {totalPages > 1 && (
+                    <div className="flex gap-3 mt-5">
+                        <button
+                            className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Anterior
+                        </button>
+                        <span>{currentPage} de {totalPages}</span>
+                        <button
+                            className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Próxima
+                        </button>
+                    </div>
+                )}
             </div>
         </>
     );
