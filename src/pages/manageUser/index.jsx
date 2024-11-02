@@ -6,6 +6,7 @@ import { Navbar } from "../../components";
 import { useToggleView } from "../../contexts";
 import { Delete, Edit } from "../../libs/icons";
 import { UsuarioService } from "../../service/usuario/UsuarioService";
+import { SettingService } from "../../service/setting/SettingService";
 import { ModalUser } from "../../components/modalUser";
 
 export const ManageUser = () => {
@@ -18,14 +19,43 @@ export const ManageUser = () => {
     const [action, setAction] = useState(null);
 
     const [setting, setSetting] = useState({
-        establishmentName: "Estabelecimento",
-        serviceCharge: false,
-        serviceChargePercentage: 0,
+        _id: "",
+        establishmentName: "",
+        serviceCharge: "",
+        serviceChargePercentage: "",
     });
 
     useEffect(() => {
         getAllUsers();
     }, [toggleView]);
+
+    useEffect(() => {
+        getSetting();
+    }, []);
+
+    const getSetting =  useCallback(() => {
+        SettingService.get()
+            .then((result) => {
+                setSetting(result);
+            })
+            .catch((error) => { return toast.error(error) });
+    }, []);
+
+    const updateSetting =  useCallback(() => {
+        const data = {
+            id: setting._id,
+            establishmentName: setting.establishmentName,
+            serviceCharge: Boolean(setting.serviceCharge),
+            serviceChargePercentage: Number(setting.serviceChargePercentage),
+        };
+
+        SettingService.update(data)
+            .then((result) => {
+                setSetting(result.data);
+                toast.success(result.message);
+            })
+            .catch((error) => { return toast.error(error) });
+    }, [setting]);
 
     const getAllUsers = useCallback(() => {
         try {
@@ -64,7 +94,7 @@ export const ManageUser = () => {
                 setSetting((prev) => ({ ...prev, establishmentName: e.target.value }));
                 break;
             case "serviceCharge":
-                setSetting((prev) => ({ ...prev, serviceCharge: e.target.value }));
+                setSetting((prev) => ({ ...prev, serviceCharge: e.target.value === "true" }));
                 break;
             case "serviceChargePercentage":
                 setSetting((prev) => ({ ...prev, serviceChargePercentage: e.target.value }));
@@ -74,20 +104,6 @@ export const ManageUser = () => {
         };
     };
 
-    const handleSaveSetting = () => {
-        try {
-            const data = {
-                establishmentName: setting.establishmentName,
-                serviceCharge: Boolean(setting.serviceCharge),
-                serviceChargePercentage: Number(setting.serviceChargePercentage),
-            };
-
-            console.log(data);
-        }
-        catch (error) {
-            return toast.error(error);
-        };
-    };
 
     return (
         <>
@@ -156,7 +172,7 @@ export const ManageUser = () => {
                     ><Plus />Cadastrar usuário</button>
                 </div>
 
-                <div className="hidden">
+                <div className="">
                     <h2 className="w-[300px] text-center p-2 border-2 rounded-md border-[#1C1D26] text-[#1C1D26] font-semibold"
                     >Configurações</h2>
 
@@ -178,7 +194,7 @@ export const ManageUser = () => {
                             <select className="w-full border rounded-xl p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="serviceCharge"
                                 name="serviceCharge"
-                                defaultValue="false"
+                                defaultValue={setting.serviceCharge}
                                 onChange={(e) => handleSetting("serviceCharge", e)}>
                                 <option value="true" >Sim</option>
                                 <option value="false" >Não</option>
@@ -203,7 +219,7 @@ export const ManageUser = () => {
                         <button
                             className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-[#1C1D26] self-center mt-5
                             rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
-                            onClick={() => handleSaveSetting()}
+                            onClick={() => updateSetting()}
                         ><Reflesh />Atualizar configurações</button>
                     </div>
                 </div>
