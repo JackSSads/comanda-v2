@@ -184,7 +184,7 @@ export const ManageUser = () => {
                             </table>
                         </div>
                     </div>
-                    <button className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+                    <button className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] transition-all delay-75"
                         onClick={() => handleModal("new")}
                     ><Plus />Cadastrar usuário</button>
                 </div>
@@ -233,7 +233,7 @@ export const ManageUser = () => {
                             />
                         </label>
 
-                        <label className="relative w-full flex flex-col items-center gap-3">
+                        <label className="-z-10 relative w-full flex flex-col items-center gap-3">
                             <div className="w-full flex flex-col items-center gap-3 border rounded-xl p-3 relative">
                                 <button
                                     type="button"
@@ -271,8 +271,8 @@ export const ManageUser = () => {
                         </label>
 
                         <button
-                            className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-[#1C1D26] self-center mt-5
-                            rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+                            className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-white self-center mt-5
+                            rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] transition-all delay-75"
                             onClick={() => updateSetting()}
                         ><Reflesh />Atualizar configurações</button>
                     </div>

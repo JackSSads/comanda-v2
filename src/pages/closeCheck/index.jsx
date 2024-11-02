@@ -260,7 +260,7 @@ export const CloseCheck = () => {
                     />
                 )}
 
-                <button className="w-[250px] p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+                <button className="w-[250px] p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] transition-all delay-75"
                     onClick={() => closeCheck()}
                 >{checkStatus ? "Finalizar Comanda" : "Atualizar Comanda"}</button>
 

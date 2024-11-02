@@ -195,7 +195,7 @@ export const ListingChecks = () => {
                             <p>{e.status ? "" : "Encerrada"}</p>
                         </div>
 
-                        <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
+                        <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:bg-[#EB8F00] transition-all delay-75"
                             onClick={() => navigate(`/garcom/comanda/${e._id}`)}
                             disabled={!e.status}
                         ><Plus /></button>
@@ -210,13 +210,13 @@ export const ListingChecks = () => {
                                 <span className="font-bold text-[#EB8F00]">Total:</span> R$ 0,00</h4>
                         </div>
 
-                        <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
+                        <button className="p-2 rounded-md bg-[#1C1D26] text-white hover:bg-[#EB8F00] transition-all delay-75"
                             onClick={() => setToggleView(true)}
                         ><Plus /></button>
                     </div>
                 )}
 
-                <button className="mt-[100px] flex gap-1 font-semibold rounded-xl p-3 bg-[#1C1D26] text-white hover:text-[#1C1D26] hover:bg-[#EB8F00] transition-all delay-75"
+                <button className="mt-[100px] flex gap-1 font-semibold rounded-xl p-3 bg-[#1C1D26] text-white hover:bg-[#EB8F00] transition-all delay-75"
                     onClick={() => setToggleView(true)}
                 ><Plus /> Nova comanda</button>
             </div>

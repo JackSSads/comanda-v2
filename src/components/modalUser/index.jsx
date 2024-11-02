@@ -154,6 +154,7 @@ export const ModalUser = ({ action, id }) => {
                     <select className="w-[250px] border p-3 rounded-xl"
                         id={value.func}
                         name="func"
+                        value={value.func}
                         onChange={(e) => handleInput(e.target.value, "func")}>
                         <option value={`garcom`} >Garçom</option>
                         <option value={`barmen`} >Barmen</option>
@@ -162,11 +163,11 @@ export const ModalUser = ({ action, id }) => {
                     </select>
                 </label>
 
-                <button className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+                <button className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:text-white transition-all delay-75"
                     onClick={() => { action === "new" ? createUser() : updateById() }}
                 ><Plus /> {action === "new" ? "Cadastrar usuário" : "Atualizar usuário"}</button>
             </div>
-            <button className="flex justify-center p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+            <button className="flex justify-center p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:text-white transition-all delay-75"
                 onClick={() => setToggleView(false)}
             ><Close /></button>
         </div>

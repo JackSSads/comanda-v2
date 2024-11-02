@@ -130,7 +130,7 @@ export const ModalProduct = ({ action, id }) => {
                     <select className="w-[250px] border p-3 rounded-xl"
                         id={value.category}
                         name="category"
-                        defaultValue={`bebida`}
+                        value={value.category}                        
                         onChange={(category) => handleInput("category", category)}>
                         <option value={`Bebida`} >Bebida</option>
                         <option value={`Drink`} >Sucos & Drinks</option>
@@ -142,12 +142,12 @@ export const ModalProduct = ({ action, id }) => {
                     </select>
                 </label>
 
-                <button className="flex justify-center w-[250px] p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+                <button className="flex justify-center w-[250px] p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:text-white transition-all delay-75"
                     onClick={() => action === "new" ? createProduct() : updateById()}
                 ><Plus /> {action === "new" ? "Cadastrar" : "Atualizar"}</button>
             </div>
 
-            <button className="flex justify-center p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+            <button className="flex justify-center p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:text-white transition-all delay-75"
                 onClick={() => setToggleView(false)}
             ><Close /></button>
         </div>

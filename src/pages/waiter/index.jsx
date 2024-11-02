@@ -300,7 +300,7 @@ export const Waiter = () => {
                     </div>
                 ))}
 
-                <button className="mt-[30px] flex gap-1 p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+                <button className="mt-[30px] flex gap-1 p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
                     onClick={() => navigate(`/garcom/comanda/${id}/add-product`)}
                 ><Plus /> Adicionar item</button>
             </div>

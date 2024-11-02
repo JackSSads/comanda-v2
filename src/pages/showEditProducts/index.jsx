@@ -85,7 +85,7 @@ export const ShowEditProducts = () => {
                             <i onClick={() => setFiltro("")}><Close /></i>
                         </button>
                     </label>
-                    <button className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] hover:text-[#1C1d26] bg-[#1C1D26] transition-all delay-75"
+                    <button className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] bg-[#1C1D26] transition-all delay-75"
                         onClick={() => haldletoggleViewModal("new")}
                     >Novo Produto</button>
                 </div>

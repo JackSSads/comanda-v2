@@ -67,7 +67,7 @@ export const NewCheck = () => {
 
                     <label className="w-[270px] text-sm font-bold mb-2 text-[#1C1D26]">
                         <input
-                            className="text-[#1C1D26] bg-transparent border border-[#393636] rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="text-[#1C1D26] bg-transparent border rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             id="nameClient"
                             name="nameClient"
@@ -80,7 +80,7 @@ export const NewCheck = () => {
 
                     <label className="w-[270px] text-sm font-bold mb-2 text-[#1C1D26]">
                         <input
-                            className="text-[#1C1D26] bg-transparent border border-[#393636] rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="text-[#1C1D26] bg-transparent border rounded-xl w-full p-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             id="indicacao"
                             name="obs"
@@ -94,11 +94,11 @@ export const NewCheck = () => {
 
                 <button onClick={() => createCheck()}
                     disabled={loading}
-                    className="w-[270px] rounded-xl bg-[#EB8F00] text-[#1C1D26] font-semibold p-3 border border-transparent hover:border-[#EB8F00] hover:bg-[#1C1D26] hover:text-white"
+                    className="w-[270px] rounded-xl bg-[#EB8F00] text-white font-semibold p-3 hover:bg-[#1C1D26] hover:text-white"
                 >Cadastrar</button>
             </div>
 
-            <button className="flex justify-center p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
+            <button className="flex justify-center p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] transition-all delay-75"
                 onClick={() => setToggleView(false)}
             ><Close /></button>
 
