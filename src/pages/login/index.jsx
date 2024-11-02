@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components";
 import toast, { Toaster } from "react-hot-toast";
+import { SettingService } from "../../service/setting/SettingService";
 
 import { LoginService } from "../../service/login/LoginService";
 
 export const Login = () => {
-
-    const nameProject = process.env.REACT_APP_BASE_NAME_SISTEM
 
     const navigate = useNavigate();
 
@@ -15,6 +14,22 @@ export const Login = () => {
         email: "",
         pass: ""
     });
+
+    const [setting, setSetting] = useState({
+        establishmentName: "",
+    });
+
+    useEffect(() => {
+        getSetting();
+    }, []);
+
+    const getSetting =  useCallback(() => {
+        SettingService.get()
+            .then((result) => {
+                setSetting(result);
+            })
+            .catch((error) => { return toast.error(error) });
+    }, []);
 
     const handleInput = (onChange, e) => {
         switch (onChange) {
@@ -70,7 +85,7 @@ export const Login = () => {
 
     return (
         <div className="h-full w-full">
-            <Navbar title={nameProject} />
+            <Navbar title={setting.establishmentName} />
             <div className="h-full flex justify-center items-center flex-col">
                 <Toaster />
                 <div className="mb-4">
