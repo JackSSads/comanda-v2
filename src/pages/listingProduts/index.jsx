@@ -211,11 +211,11 @@ export const ListingProduts = () => {
             <Navbar title={`Produtos`} url />
             <div className="w-[95%] min-h-[85vh] pb-[200px] px-3 rounded-xl flex items-center flex-col gap-10">
                 <Toaster />
-                <ListinProductsForCheck products={currentItems} />
+                <ListinProductsForCheck products={addProductsTiket} />
                 <div className="fixed bottom-0 flex items-center justify-center w-full bg-[#EB8F00] p-1 text-center text-slate-100">
                     <div className="flex flex-col w-2/3">
-                        {currentItems.length ? (
-                            <h5 className="text-xl my-3"><span className="font-bold">{currentItems.length}</span> produtos</h5>
+                        {addProductsTiket.length ? (
+                            <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> produtos</h5>
                         ) : (
                             <h5 className="text-xl my-3">Adicione produtos</h5>
                         )}
