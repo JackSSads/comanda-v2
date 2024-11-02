@@ -23,6 +23,7 @@ export const ManageUser = () => {
         establishmentName: "",
         serviceCharge: "",
         serviceChargePercentage: "",
+        imagePix: ""
     });
 
     useEffect(() => {
@@ -33,7 +34,7 @@ export const ManageUser = () => {
         getSetting();
     }, []);
 
-    const getSetting =  useCallback(() => {
+    const getSetting = useCallback(() => {
         SettingService.get()
             .then((result) => {
                 setSetting(result);
@@ -41,15 +42,20 @@ export const ManageUser = () => {
             .catch((error) => { return toast.error(error) });
     }, []);
 
-    const updateSetting =  useCallback(() => {
-        const data = {
-            id: setting._id,
+    const updateSetting = useCallback(() => {
+        const payload = {
+            _id: setting._id,
             establishmentName: setting.establishmentName,
             serviceCharge: Boolean(setting.serviceCharge),
             serviceChargePercentage: Number(setting.serviceChargePercentage),
+            imagePix: setting.imagePix
         };
 
-        SettingService.update(data)
+        if (!payload._id) {
+            return toast.error("Configurações não carregadas.");
+        };
+
+        SettingService.update(payload)
             .then((result) => {
                 setSetting(result.data);
                 toast.success(result.message);
@@ -86,6 +92,19 @@ export const ManageUser = () => {
         setId(id);
         setAction(action);
         setToggleView(true);
+    };
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setSetting((prev) => ({ ...prev, imagePix: reader.result }));
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        };
     };
 
     const handleSetting = (onChange, e) => {
@@ -215,6 +234,23 @@ export const ManageUser = () => {
                                 value={setting.serviceChargePercentage}
                             />
                         </label>
+
+                        <label className="text-slate-700 text-sm font-bold mb-2 flex flex-col">
+                            QR Code Pix
+                            <input
+                                type="file"
+                                id="qrcodepix"
+                                name="qrcodepix"
+                                className="w-full border rounded-xl p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                onChange={(e) => handleImageUpload(e)}
+                            />
+                        </label>
+
+                        <div className="flex justify-center items-center">
+                            {setting.imagePix && (
+                                <img className="border rounded w-[200px] h-[200px] object-cover" src={setting.imagePix} alt="Imagem do usuário" />
+                            )}
+                        </div>
 
                         <button
                             className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-[#1C1D26] self-center mt-5
