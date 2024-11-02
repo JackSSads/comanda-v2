@@ -4,12 +4,11 @@ import toast, { Toaster } from "react-hot-toast";
 
 import { Navbar, Calc } from "../../components";
 import { CashierService } from "../../service/cashier/CashierService";
+import { SettingService } from "../../service/setting/SettingService";
 import { CheckService } from "../../service/check/CheckService";
 import socket from "../../service/socket";
 
 export const CloseCheck = () => {
-
-    const nameProject = process.env.REACT_APP_BASE_NAME_SISTEM
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -28,6 +27,11 @@ export const CloseCheck = () => {
     const [checkStatus, setCheckStatus] = useState(true);
 
     const [visibilityCalc, setVisibilityCal] = useState(false);
+
+    const [setting, setSetting] = useState({
+        serviceCharge: false,
+        serviceChargePercentage: 0,
+    });
 
     useEffect(() => {
         getCheck();
@@ -58,6 +62,17 @@ export const CloseCheck = () => {
 
         setUnion(() => [...cashier, newCheck]);
     }, [client, cashier, selPagId]);
+
+    useEffect(() => {
+        getSetting();
+    }, []);
+
+    const getSetting = useCallback(() => {
+        SettingService.get()
+            .then((result) => {
+                setSetting(result);
+            });
+    }, []);
 
     const getCheck = useCallback(() => {
 
@@ -206,13 +221,13 @@ export const CloseCheck = () => {
                         ))}
                     </ul>
 
-                    {nameProject !== "avanti" ? (
+                    {setting.serviceCharge ? (
                         <>
                             <h2 className="mt-5 text-center text-slate-900 font-bold text-[22px]">
                                 Consumo: <span className="text-slate-500">R$ {parseFloat(totalValue).toFixed(2).replace(".", ",")}</span>
                             </h2>
                             <h2 className="flex flex-col mt-5 text-center text-slate-900 font-bold text-[28px]">
-                                Total + 10%: <span className="text-slate-500">R$ {parseFloat(totalValue * 1.1).toFixed(2).replace(".", ",")}</span>
+                                Total + {setting.serviceChargePercentage}%: <span className="text-slate-500">R$ {parseFloat(totalValue + (totalValue * setting.serviceChargePercentage / 100)).toFixed(2).replace(".", ",")}</span>
                             </h2>
                         </>
                     ) : (
