@@ -39,7 +39,7 @@ Aplicação React desenvolvida para gerenciar comandas e pedidos de bares e rest
 
 2. Iniciando o container
    ```bash
-   docker run -p 3000:3000 <nome_para_a_imagem>
+   docker run -p 3000:3000 <nome_da_imagem>
    ```
 
 
