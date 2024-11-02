@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-import { Plus, Reflesh } from "../../libs/icons";
 import { Navbar } from "../../components";
 import { useToggleView } from "../../contexts";
-import { Delete, Edit } from "../../libs/icons";
+import { Delete, Edit, Plus, Reflesh } from "../../libs/icons";
 import { UsuarioService } from "../../service/usuario/UsuarioService";
 import { SettingService } from "../../service/setting/SettingService";
 import { ModalUser } from "../../components/modalUser";
@@ -235,22 +234,42 @@ export const ManageUser = () => {
                             />
                         </label>
 
-                        <label className="text-slate-700 text-sm font-bold mb-2 flex flex-col">
-                            QR Code Pix
+                        <label className="relative w-full flex flex-col items-center gap-3">
+                            <div className="w-full flex flex-col items-center gap-3 border rounded-xl p-3 relative">
+                                <button
+                                    type="button"
+                                    onClick={() => document.getElementById("qrcodepix").click()}
+                                    className="w-full py-2 bg-[#EB8F00] text-white font-semibold rounded-lg hover:bg-[#1C1D26] transition-all"
+                                >
+                                    QR Code Pix
+                                </button>
+
+                                {setting.imagePix && (
+                                    <div className="relative w-2/3">
+                                        <img
+                                            className="w-[250px] rounded-xl object-cover"
+                                            src={setting.imagePix}
+                                            alt="Imagem do QR Code Pix"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setSetting((prev) => ({ ...prev, imagePix: "" }))}
+                                            className="absolute bottom-2 right-2 p-2 bg-white text-red-600 rounded-full shadow-md hover:bg-red-100 transition-all"
+                                        >
+                                            <Delete />
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
                             <input
                                 type="file"
                                 id="qrcodepix"
                                 name="qrcodepix"
-                                className="w-full border rounded-xl p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                onChange={(e) => handleImageUpload(e)}
+                                className="hidden"
+                                onChange={handleImageUpload}
                             />
                         </label>
-
-                        <div className="flex justify-center items-center">
-                            {setting.imagePix && (
-                                <img className="border rounded w-[200px] h-[200px] object-cover" src={setting.imagePix} alt="Imagem do usuário" />
-                            )}
-                        </div>
 
                         <button
                             className="flex gap-1 justify-center w-[250px] p-3 font-semibold text-[#1C1D26] self-center mt-5
