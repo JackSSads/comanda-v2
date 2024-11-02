@@ -1,6 +1,6 @@
 # Projeto React
 
-Este projeto é uma aplicação React organizada para gerenciar e fechar comandas. Abaixo está a estrutura do projeto e uma descrição de cada componente e serviço.
+Aplicação React desenvolvida para gerenciar comandas e pedidos de bares e restaurantes de pequeno porte. Abaixo está a estrutura do projeto e uma descrição de cada componente e serviço.
 
 ## Configuração do Ambiente
 
@@ -30,6 +30,17 @@ Este projeto é uma aplicação React organizada para gerenciar e fechar comanda
     ```bash
     npm start
     ```
+### Caso queira criar uma imagem Docker desse projeto:
+
+1. Criando imagem Docker
+   ```bash
+   docker build -t <nome_para_a_imagem>
+   ```
+
+2. Iniciando o container
+   ```bash
+   docker run -p 3000:3000 <nome_para_a_imagem>
+   ```
 
 
 ## Licença
