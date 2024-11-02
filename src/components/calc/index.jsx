@@ -26,12 +26,16 @@ export const Calc = ({ visibilityCalc }) => {
         };
     };
 
+    const fontSize = calculo.length >= 9 ? '2.5rem' : '3.5rem';
+
     return (
         <div className={`border ${visibilityCalc ? '' : 'hidden'} border-[#EBAE4D] rounded-md bg-[#EBAE4D]/25 shadow-2xl w-[300px] h-[500px] flex flex-col justify-center items-center gap-4`}>
             <Toaster />
-            <div className="px-1 overflow-hidden w-[95%] h-16 bg-[#EBAD00] rounded-md flex items-center justify-end">
-                <h3 className="text-6xl">{calculo}</h3>
-            </div>
+            <input className="px-1 overflow-hidden w-[95%] h-auto bg-[#EBAD00] rounded-md flex items-center justify-end text-6xl text-right flex-wrap"
+                value={calculo}
+                disabled
+                style={{ fontSize }}  
+            />
 
             <div className="w-[95%] h-[400px] rounded-md flex flex-col gap-1">
                 <div className="w-full h-[75px] border border-[#EBAE4D] rounded-md flex gap-[4px] justify-center items-center">
