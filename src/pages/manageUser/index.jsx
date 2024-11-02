@@ -122,7 +122,6 @@ export const ManageUser = () => {
         };
     };
 
-
     return (
         <>
             <Navbar title={"Usuários"} url />
@@ -212,7 +211,7 @@ export const ManageUser = () => {
                             <select className="w-full border rounded-xl p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="serviceCharge"
                                 name="serviceCharge"
-                                defaultValue={setting.serviceCharge}
+                                value={setting.serviceCharge ? "true" : "false"}
                                 onChange={(e) => handleSetting("serviceCharge", e)}>
                                 <option value="true" >Sim</option>
                                 <option value="false" >Não</option>
