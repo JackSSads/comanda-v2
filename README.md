@@ -39,9 +39,9 @@ Aplicação React desenvolvida para gerenciar comandas e pedidos de bares e rest
 
 2. Iniciando o container
    ```bash
-   docker run -p 3000:3000 <nome_da_imagem>
+   docker run -p <porta_do_host>:<porta_do_container> <nome_da_imagem>
    ```
-
+    Use a flag `-d` para executar o container em background.
 
 ## Licença
 
