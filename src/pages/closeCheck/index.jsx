@@ -31,6 +31,7 @@ export const CloseCheck = () => {
     const [setting, setSetting] = useState({
         serviceCharge: false,
         serviceChargePercentage: 0,
+        imagePix: "",
     });
 
     useEffect(() => {
@@ -250,6 +251,14 @@ export const CloseCheck = () => {
                         <option value={`debito`} >Débito</option>
                     </select>
                 </label>
+
+                {(setting.imagePix && selPagId === "pix") && (
+                    <img
+                        className="w-[250px] rounded-xl object-cover"
+                        src={setting.imagePix}
+                        alt="Imagem do QR Code Pix"
+                    />
+                )}
 
                 <button className="w-[250px] p-3 font-semibold text-[#1C1D26] rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] hover:text-white transition-all delay-75"
                     onClick={() => closeCheck()}
