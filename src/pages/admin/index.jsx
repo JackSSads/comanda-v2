@@ -141,7 +141,7 @@ export const Admin = () => {
 
                     <button className="w-1/3 font-semibold text-white py-2 rounded-md hover:bg-[#EB8F00] bg-[#1C1D26] transition-all delay-75"
                         onClick={() => navigate("/usuarios")}
-                    >Usuários</button>
+                    >Configurações</button>
 
                     <button className="w-1/3 font-semibold text-white py-2 rounded-md hover:bg-[#EB8F00] bg-[#1C1D26] transition-all delay-75"
                         onClick={() => navigate("/garcom/comandas")}
