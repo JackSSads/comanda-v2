@@ -233,7 +233,7 @@ export const ManageUser = () => {
                             />
                         </label>
 
-                        <label className="-z-10 relative w-full flex flex-col items-center gap-3">
+                        <label className={`${toggleView ? "-z-10" : ""} relative w-full flex flex-col items-center gap-3`}>
                             <div className="w-full flex flex-col items-center gap-3 border rounded-xl p-3 relative">
                                 <button
                                     type="button"
