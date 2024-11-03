@@ -108,7 +108,7 @@ export const ShowEditProducts = () => {
                                 onClick={() => haldletoggleViewModal("edit", e._id)}
                             ><Edit /></button>
 
-                            <button className=" text-slate-900 hover:text-[#EB8F00] transition-all delay-75"
+                            <button className=" text-slate-900 hover:text-red-500 transition-all delay-75"
                                 onClick={() => deleteById(e._id)}
                             ><Delete /></button>
                         </div>
