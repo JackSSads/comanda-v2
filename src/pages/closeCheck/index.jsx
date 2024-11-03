@@ -13,17 +13,20 @@ export const CloseCheck = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [obs, setObs] = useState("");
-    const [products, setProducts] = useState([]);
-    const [totalValue, setTotalValue] = useState(0);
-    const [client, setClient] = useState("");
+    const [comanda, setComanda] = useState({
+        _id: "",
+        nameClient: "",
+        obs: "",
+        products: [],
+        status: "",
+        totalValue: "",
+        pagForm: "pix",
+    });
 
-    const [check, setCheck] = useState([]);
     const [cashier, setCashier] = useState([]);
     const [cashierId, setCashierId] = useState("");
     const [union, setUnion] = useState([]);
 
-    const [selPagId, setSelPagId] = useState("pix");
     const [checkStatus, setCheckStatus] = useState(true);
 
     const [visibilityCalc, setVisibilityCal] = useState(false);
@@ -52,17 +55,17 @@ export const CloseCheck = () => {
         };
 
         const newCheck = {
-            _id: id,
-            nameClient: client,
-            pagForm: selPagId,
-            products,
+            _id: comanda._id,
+            nameClient: comanda.nameClient,
+            pagForm: comanda.pagForm,
+            products: comanda.products,
             status: false,
-            totalValue,
-            obs
+            totalValue: comanda.totalValue,
+            obs: comanda.obs
         };
 
         setUnion(() => [...cashier, newCheck]);
-    }, [client, cashier, selPagId]);
+    }, [comanda, cashier]);
 
     useEffect(() => {
         getSetting();
@@ -76,15 +79,19 @@ export const CloseCheck = () => {
     }, []);
 
     const getCheck = useCallback(() => {
-
         try {
             CheckService.getById(id)
                 .then((result) => {
-                    setTotalValue(result.data.totalValue)
-                    setClient(result.data.nameClient);
-                    setProducts(result.data.products);
-                    setObs(result.data.obs);
-                    setCheck(result.data);
+                    setComanda((prev) => ({
+                        ...prev,
+                        _id: result.data._id,
+                        nameClient: result.data.nameClient,
+                        obs: result.data.obs,
+                        products: result.data.products,
+                        status: result.data.status,
+                        totalValue: result.data.totalValue,
+                        pagForm: result.data.pagForm
+                    }));
 
                     // verificando status da comanda
                     if (!result.data.status) {
@@ -114,23 +121,24 @@ export const CloseCheck = () => {
     }, []);
 
     const editCheckStatus = () => {
-
         const data = {
-            _id: check._id,
-            nameClient: check.nameClient,
-            obs: check.obs,
-            products: check.products,
+            _id: comanda._id,
+            nameClient: comanda.nameClient,
+            obs: comanda.obs,
+            products: comanda.products,
             status: false,
-            totalValue: check.totalValue,
-            pagForm: selPagId,
+            totalValue: comanda.totalValue,
+            pagForm: comanda.pagForm,
         };
 
         try {
             CheckService.updateById(id, data)
                 .then((result) => {
-                    setCheck(result.data);
+                    toast.success(result.message);
+                })
+                .catch(() => {
+                    toast.error("Ocorreu um erro na comunicação com o DB");
                 });
-
         } catch (error) {
             return toast.error(error);
         };
@@ -157,7 +165,7 @@ export const CloseCheck = () => {
             CashierService.update(cashierId, obj)
                 .then(() => {
                     if (checkStatus) {
-                        socket.emit("comanda_finalizada", client);
+                        socket.emit("comanda_finalizada", comanda.nameClient);
                         navigate("/garcom/comandas");
                     } else {
                         navigate("/comandasFinalizadas");
@@ -169,9 +177,7 @@ export const CloseCheck = () => {
     };
 
     const cancelCheck = () => {
-
         try {
-
             let totalValueCalculed = 0;
 
             for (let i = 0; i < cashier.length; i++) {
@@ -191,8 +197,10 @@ export const CloseCheck = () => {
 
             CheckService.deleteById(id);
 
+            const comanda_id = comanda._id;
+
             if (checkStatus) {
-                socket.emit("comanda_cancelada", { client, id });
+                socket.emit("comanda_cancelada", { comanda_id, id });
                 navigate("/garcom/comandas");
             } else {
                 navigate("/comandasFinalizadas");
@@ -209,12 +217,12 @@ export const CloseCheck = () => {
 
     return (
         <>
-            <Navbar title={`Finalizar: ${client}`} url />
+            <Navbar title={`Finalizar: ${comanda.nameClient}`} url />
             <div className="w-[95%] min-h-[100vh] m-2 p-1 rounded-xl flex items-center justify-center flex-col gap-14">
                 <Toaster />
                 <div className="px-10 py-14 rounded-md shadow-xl bg-[#D39825]/10">
                     <ul className="max-w-2/3 flex gap-5 flex-col divide-y divide-dashed divide-slate-700">
-                        {products.map((e, index) => (
+                        {comanda.products.map((e, index) => (
                             <li key={index}
                                 className="w-[100%] flex justify-between gap-5 text-slate-700 font-semibold">
                                 <span><span className="text-[#EB8F00]">{e.qnt}x</span> - {e.nameProduct}</span><span className="font-bold text-slate-500">R$ {e.totalPrice.toFixed(2).replace(".", ",")}</span>
@@ -225,15 +233,15 @@ export const CloseCheck = () => {
                     {setting.serviceCharge ? (
                         <>
                             <h2 className="mt-5 text-center text-slate-900 font-bold text-[22px]">
-                                Consumo: <span className="text-slate-500">R$ {parseFloat(totalValue).toFixed(2).replace(".", ",")}</span>
+                                Consumo: <span className="text-slate-500">R$ {parseFloat(comanda.totalValue).toFixed(2).replace(".", ",")}</span>
                             </h2>
                             <h2 className="flex flex-col mt-5 text-center text-slate-900 font-bold text-[28px]">
-                                Total + {setting.serviceChargePercentage}%: <span className="text-slate-500">R$ {parseFloat(totalValue + (totalValue * setting.serviceChargePercentage / 100)).toFixed(2).replace(".", ",")}</span>
+                                Total + {setting.serviceChargePercentage}%: <span className="text-slate-500">R$ {parseFloat(comanda.totalValue + (comanda.totalValue * setting.serviceChargePercentage / 100)).toFixed(2).replace(".", ",")}</span>
                             </h2>
                         </>
                     ) : (
                         <h2 className="mt-5 text-center text-slate-900 font-bold text-[28px]">
-                            Total: <span className="text-slate-500">R$ {parseFloat(totalValue).toFixed(2).replace(".", ",")}</span>
+                            Total: <span className="text-slate-500">R$ {parseFloat(comanda.totalValue).toFixed(2).replace(".", ",")}</span>
                         </h2>
                     )}
                 </div>
@@ -241,10 +249,10 @@ export const CloseCheck = () => {
                 <label className="flex flex-col text-slate-900 text-[20px] font-semibold">
                     Pagar com:
                     <select className="w-[250px] border p-3 rounded-xl"
-                        id={selPagId}
+                        id={comanda.selPagId}
                         name="selPag"
-                        defaultValue={`pix`}
-                        onChange={(e) => setSelPagId(e.target.value)}>
+                        value={comanda.pagForm}
+                        onChange={(e) => setComanda((prev) => ({ ...prev, pagForm: e.target.value }))}>
                         <option value={`pix`} >Pix</option>
                         <option value={`dinheiro`} >Dinheiro</option>
                         <option value={`credito`} >Crédito</option>
@@ -252,7 +260,7 @@ export const CloseCheck = () => {
                     </select>
                 </label>
 
-                {(setting.imagePix && selPagId === "pix") && (
+                {(setting.imagePix && comanda.pagForm === "pix") && (
                     <img
                         className="w-[250px] rounded-xl object-cover"
                         src={setting.imagePix}
