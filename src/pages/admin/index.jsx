@@ -32,11 +32,11 @@ export const Admin = () => {
 
     const getAllCashier = useCallback(() => {
         try {
-            CashierService.getAll()
+            CashierService.get()
                 .then((result) => {
-                    setCheckId(result.data[0]._id || 0);
-                    setLengthCheck(result.data[0].comandas.length || 0);
-                    setRevenue(parseFloat(result.data[0].totalValue).toFixed(2).replace(".", ","));
+                    setCheckId(result.data._id || 0);
+                    setLengthCheck(result.data.comandas.length || 0);
+                    setRevenue(parseFloat(result.data.totalValue).toFixed(2).replace(".", ","));
 
                     let lengthProduct = 0;
 
@@ -45,25 +45,25 @@ export const Admin = () => {
                     let totalCredit = 0;
                     let totalCash = 0;
 
-                    for (let i = 0; i < result.data[0]["comandas"].length; i++) {
-                        let check = result.data[0]["comandas"][i]["products"].length;
+                    for (let i = 0; i < result.data["comandas"].length; i++) {
+                        let check = result.data["comandas"][i]["products"].length;
 
                         lengthProduct += check;
                     };
 
-                    for (let i = 0; i < result.data[0]["comandas"].length; i++) {
+                    for (let i = 0; i < result.data["comandas"].length; i++) {
 
-                        let pagForm = result.data[0]["comandas"][i]["pagForm"];
+                        let pagForm = result.data["comandas"][i]["pagForm"];
 
                         switch (pagForm) {
                             case "pix":
-                                totalPix += result.data[0]["comandas"][i]["totalValue"]; break;
+                                totalPix += result.data["comandas"][i]["totalValue"]; break;
                             case "dinheiro":
-                                totalCash += result.data[0]["comandas"][i]["totalValue"]; break;
+                                totalCash += result.data["comandas"][i]["totalValue"]; break;
                             case "credito":
-                                totalCredit += result.data[0]["comandas"][i]["totalValue"]; break
+                                totalCredit += result.data["comandas"][i]["totalValue"]; break
                             case "debito":
-                                totalDebit += result.data[0]["comandas"][i]["totalValue"]; break;
+                                totalDebit += result.data["comandas"][i]["totalValue"]; break;
                             default: return;
                         };
                     };

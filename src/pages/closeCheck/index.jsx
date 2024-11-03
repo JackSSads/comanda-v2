@@ -103,10 +103,10 @@ export const CloseCheck = () => {
 
     const getCashier = useCallback(() => {
         try {
-            CashierService.getAll()
+            CashierService.get()
                 .then((result) => {
-                    setCashier(result.data[0].comandas);
-                    setCashierId(result.data[0]._id);
+                    setCashier(result.data.comandas);
+                    setCashierId(result.data._id);
                 });
         } catch (error) {
             return toast.error(error);
@@ -154,7 +154,7 @@ export const CloseCheck = () => {
         };
 
         try {
-            CashierService.updateById(cashierId, obj)
+            CashierService.update(cashierId, obj)
                 .then(() => {
                     if (checkStatus) {
                         socket.emit("comanda_finalizada", client);
@@ -187,7 +187,7 @@ export const CloseCheck = () => {
                 status: false
             };
 
-            CashierService.updateById(cashierId, obj);
+            CashierService.update(cashierId, obj);
 
             CheckService.deleteById(id);
 
