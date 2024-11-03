@@ -13,13 +13,15 @@ export const CloseCheck = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const [disabledButton, setDisabledButton] = useState(true);
+
     const [check, setCheck] = useState({
         _id: "",
         nameClient: "",
         obs: "",
         products: [],
-        status: "",
-        totalValue: "",
+        status: false,
+        totalValue: 0,
         pagForm: "",
     });
 
@@ -35,7 +37,6 @@ export const CloseCheck = () => {
     });
 
     const [union, setUnion] = useState([]);
-
 
     const [visibilityCalc, setVisibilityCal] = useState(false);
 
@@ -96,11 +97,11 @@ export const CloseCheck = () => {
                         totalValue: result.data.totalValue,
                         pagForm: result.data.pagForm ? result.data.pagForm : "pix"
                     }));
+                    setDisabledButton(false);
                 }).catch(() => {
                     toast.error("Comanda não encontrada!");
                     return navigate("/garcom/comandas");
                 });
-
         } catch (error) {
             return toast.error(error);
         };
@@ -270,6 +271,7 @@ export const CloseCheck = () => {
                 )}
 
                 <button className="w-[250px] p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] transition-all delay-75"
+                    disabled={disabledButton}
                     onClick={() => closeCheck()}
                 >{check.status ? "Finalizar Comanda" : "Atualizar Comanda"}</button>
 
@@ -289,6 +291,7 @@ export const CloseCheck = () => {
                 <Calc visibilityCalc={visibilityCalc} />
 
                 <button className=" w-[250px] p-3 font-semibold rounded-xl bg-red-600 text-white transition-all delay-75"
+                    disabled={disabledButton}
                     onClick={() => cancelCheck()}
                 >Cancelar Comanda</button>
             </div>
