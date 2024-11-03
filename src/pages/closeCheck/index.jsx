@@ -146,7 +146,13 @@ export const CloseCheck = () => {
     const closeCheck = () => {
         editCheckStatus();
 
-        let totalValueCalculed = union.reduce((acc, item) => acc + item.totalValue, 0);
+        let totalValueCalculed = 0;
+
+        for (let i = 0; i < union.length; i++) {
+            let soma = union[i]["totalValue"];
+
+            totalValueCalculed += soma;
+        };
 
         const obj = {
             comandas: union, // Aqui estamos apenas passando as comandas.
