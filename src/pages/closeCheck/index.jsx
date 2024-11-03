@@ -13,7 +13,7 @@ export const CloseCheck = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [comanda, setComanda] = useState({
+    const [check, setCheck] = useState({
         _id: "",
         nameClient: "",
         obs: "",
@@ -23,49 +23,49 @@ export const CloseCheck = () => {
         pagForm: "pix",
     });
 
-    const [cashier, setCashier] = useState([]);
-    const [cashierId, setCashierId] = useState("");
-    const [union, setUnion] = useState([]);
-
-    const [checkStatus, setCheckStatus] = useState(true);
-
-    const [visibilityCalc, setVisibilityCal] = useState(false);
-
     const [setting, setSetting] = useState({
         serviceCharge: false,
         serviceChargePercentage: 0,
         imagePix: "",
     });
 
+    const [cashier, setCashier] = useState({
+        _id: "",
+        comandas: []
+    });
+
+    const [union, setUnion] = useState([]);
+    const [visibilityCalc, setVisibilityCal] = useState(false);
+
     useEffect(() => {
         getCheck();
-        getCashier()
+        getCashier();
     }, []);
 
     useEffect(() => {
-        for (let i = 0; i < cashier.length; i++) {
+        for (let i = 0; i < cashier.comandas.length; i++) {
 
             // verificando se check já existe no cashier
-            if (cashier[i]._id === id) {
+            if (cashier.comandas[i]._id === id) {
 
-                const deleteCheck = cashier.filter(item => item._id !== id);
+                const deleteCheck = cashier.comandas.filter(item => item._id !== id);
 
                 setCashier(deleteCheck);
             };
         };
 
         const newCheck = {
-            _id: comanda._id,
-            nameClient: comanda.nameClient,
-            pagForm: comanda.pagForm,
-            products: comanda.products,
+            _id: check._id,
+            nameClient: check.nameClient,
+            pagForm: check.pagForm,
+            products: check.products,
             status: false,
-            totalValue: comanda.totalValue,
-            obs: comanda.obs
+            totalValue: check.totalValue,
+            obs: check.obs
         };
 
-        setUnion(() => [...cashier, newCheck]);
-    }, [comanda, cashier]);
+        setUnion(() => [...cashier.comandas, newCheck]);
+    }, []);
 
     useEffect(() => {
         getSetting();
@@ -82,7 +82,7 @@ export const CloseCheck = () => {
         try {
             CheckService.getById(id)
                 .then((result) => {
-                    setComanda((prev) => ({
+                    setCheck((prev) => ({
                         ...prev,
                         _id: result.data._id,
                         nameClient: result.data.nameClient,
@@ -92,11 +92,6 @@ export const CloseCheck = () => {
                         totalValue: result.data.totalValue,
                         pagForm: result.data.pagForm
                     }));
-
-                    // verificando status da comanda
-                    if (!result.data.status) {
-                        setCheckStatus(false);
-                    };
                 }).catch(() => {
                     toast.error("Comanda não encontrada!");
                     return navigate("/garcom/comandas");
@@ -105,15 +100,17 @@ export const CloseCheck = () => {
         } catch (error) {
             return toast.error(error);
         };
-
     }, [id]);
 
     const getCashier = useCallback(() => {
         try {
             CashierService.get()
                 .then((result) => {
-                    setCashier(result.data.comandas);
-                    setCashierId(result.data._id);
+                    setCashier((prev) => ({
+                        ...prev,
+                        _id: result.data._id,
+                        comandas: result.data.comandas
+                    }));
                 });
         } catch (error) {
             return toast.error(error);
@@ -122,13 +119,13 @@ export const CloseCheck = () => {
 
     const editCheckStatus = () => {
         const data = {
-            _id: comanda._id,
-            nameClient: comanda.nameClient,
-            obs: comanda.obs,
-            products: comanda.products,
+            _id: check._id,
+            nameClient: check.nameClient,
+            obs: check.obs,
+            products: check.products,
             status: false,
-            totalValue: comanda.totalValue,
-            pagForm: comanda.pagForm,
+            totalValue: check.totalValue,
+            pagForm: check.pagForm,
         };
 
         try {
@@ -162,10 +159,10 @@ export const CloseCheck = () => {
         };
 
         try {
-            CashierService.update(cashierId, obj)
+            CashierService.update(cashier._id, obj)
                 .then(() => {
-                    if (checkStatus) {
-                        socket.emit("comanda_finalizada", comanda.nameClient);
+                    if (check.status) {
+                        socket.emit("comanda_finalizada", check.nameClient);
                         navigate("/garcom/comandas");
                     } else {
                         navigate("/comandasFinalizadas");
@@ -187,19 +184,19 @@ export const CloseCheck = () => {
             };
 
             const obj = {
-                _id: cashierId,
+                _id: cashier._id,
                 comandas: cashier,
                 totalValue: totalValueCalculed,
                 status: false
             };
 
-            CashierService.update(cashierId, obj);
+            CashierService.update(cashier._id, obj);
 
             CheckService.deleteById(id);
 
-            const comanda_id = comanda._id;
+            const comanda_id = check._id;
 
-            if (checkStatus) {
+            if (check.status) {
                 socket.emit("comanda_cancelada", { comanda_id, id });
                 navigate("/garcom/comandas");
             } else {
@@ -217,12 +214,12 @@ export const CloseCheck = () => {
 
     return (
         <>
-            <Navbar title={`Finalizar: ${comanda.nameClient}`} url />
+            <Navbar title={`Finalizar: ${check.nameClient}`} url />
             <div className="w-[95%] min-h-[100vh] m-2 p-1 rounded-xl flex items-center justify-center flex-col gap-14">
                 <Toaster />
                 <div className="px-10 py-14 rounded-md shadow-xl bg-[#D39825]/10">
                     <ul className="max-w-2/3 flex gap-5 flex-col divide-y divide-dashed divide-slate-700">
-                        {comanda.products.map((e, index) => (
+                        {check.products.map((e, index) => (
                             <li key={index}
                                 className="w-[100%] flex justify-between gap-5 text-slate-700 font-semibold">
                                 <span><span className="text-[#EB8F00]">{e.qnt}x</span> - {e.nameProduct}</span><span className="font-bold text-slate-500">R$ {e.totalPrice.toFixed(2).replace(".", ",")}</span>
@@ -233,15 +230,15 @@ export const CloseCheck = () => {
                     {setting.serviceCharge ? (
                         <>
                             <h2 className="mt-5 text-center text-slate-900 font-bold text-[22px]">
-                                Consumo: <span className="text-slate-500">R$ {parseFloat(comanda.totalValue).toFixed(2).replace(".", ",")}</span>
+                                Consumo: <span className="text-slate-500">R$ {parseFloat(check.totalValue).toFixed(2).replace(".", ",")}</span>
                             </h2>
                             <h2 className="flex flex-col mt-5 text-center text-slate-900 font-bold text-[28px]">
-                                Total + {setting.serviceChargePercentage}%: <span className="text-slate-500">R$ {parseFloat(comanda.totalValue + (comanda.totalValue * setting.serviceChargePercentage / 100)).toFixed(2).replace(".", ",")}</span>
+                                Total + {setting.serviceChargePercentage}%: <span className="text-slate-500">R$ {parseFloat(check.totalValue + (check.totalValue * setting.serviceChargePercentage / 100)).toFixed(2).replace(".", ",")}</span>
                             </h2>
                         </>
                     ) : (
                         <h2 className="mt-5 text-center text-slate-900 font-bold text-[28px]">
-                            Total: <span className="text-slate-500">R$ {parseFloat(comanda.totalValue).toFixed(2).replace(".", ",")}</span>
+                            Total: <span className="text-slate-500">R$ {parseFloat(check.totalValue).toFixed(2).replace(".", ",")}</span>
                         </h2>
                     )}
                 </div>
@@ -249,10 +246,10 @@ export const CloseCheck = () => {
                 <label className="flex flex-col text-slate-900 text-[20px] font-semibold">
                     Pagar com:
                     <select className="w-[250px] border p-3 rounded-xl"
-                        id={comanda.selPagId}
+                        id={check.selPagId}
                         name="selPag"
-                        value={comanda.pagForm}
-                        onChange={(e) => setComanda((prev) => ({ ...prev, pagForm: e.target.value }))}>
+                        value={check.pagForm}
+                        onChange={(e) => setCheck((prev) => ({ ...prev, pagForm: e.target.value }))}>
                         <option value={`pix`} >Pix</option>
                         <option value={`dinheiro`} >Dinheiro</option>
                         <option value={`credito`} >Crédito</option>
@@ -260,7 +257,7 @@ export const CloseCheck = () => {
                     </select>
                 </label>
 
-                {(setting.imagePix && comanda.pagForm === "pix") && (
+                {(setting.imagePix && check.pagForm === "pix") && (
                     <img
                         className="w-[250px] rounded-xl object-cover"
                         src={setting.imagePix}
@@ -270,7 +267,7 @@ export const CloseCheck = () => {
 
                 <button className="w-[250px] p-3 font-semibold text-white rounded-xl bg-[#EB8F00] hover:bg-[#1C1D26] transition-all delay-75"
                     onClick={() => closeCheck()}
-                >{checkStatus ? "Finalizar Comanda" : "Atualizar Comanda"}</button>
+                >{check.status ? "Finalizar Comanda" : "Atualizar Comanda"}</button>
 
                 <div className="flex items-center">
                     <input
