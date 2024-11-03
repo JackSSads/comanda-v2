@@ -1,6 +1,6 @@
 import { API } from "../axiosConfig";
 
-const getAll = async () => {
+const get = async () => {
     try {
         const res = await API.get("/caixa");
 
@@ -14,35 +14,7 @@ const getAll = async () => {
     };
 };
 
-const getById = async (id) => {
-    try {
-        const res = await API.get(`/caixa/${id}`);
-
-        if (res) {
-            return res.data;
-        };
-
-        return new Error("Erro ao carregar caixa!");
-    } catch (error) {
-        return new Error("Erro na conexão com o Banco de dados!");
-    };
-};
-
-const create = async () => {
-    try {
-        const res = await API.post("/caixa");
-
-        if (res) {
-            return res.data;
-        };
-
-        return new Error("Erro ao criar caixa!");
-    } catch (error) {
-        return new Error("Erro ao criar caixa!");
-    };
-};
-
-const updateById = async (id, data) => {
+const update = async (id, data) => {
     try {
 
         const res = await API.put(`/caixa/${id}`, data);
@@ -72,9 +44,7 @@ const deleteById = async (id) => {
 };
 
 export const CashierService = {
-    create,
-    getAll,
-    getById,
-    updateById,
+    get,
+    update,
     deleteById,
 };
