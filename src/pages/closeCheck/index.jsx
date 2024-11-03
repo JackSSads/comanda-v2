@@ -35,6 +35,8 @@ export const CloseCheck = () => {
     });
 
     const [union, setUnion] = useState([]);
+
+
     const [visibilityCalc, setVisibilityCal] = useState(false);
 
     useEffect(() => {
@@ -92,7 +94,7 @@ export const CloseCheck = () => {
                         products: result.data.products,
                         status: result.data.status,
                         totalValue: result.data.totalValue,
-                        pagForm: result.data.pagForm
+                        pagForm: result.data.pagForm ? result.data.pagForm : "pix"
                     }));
                 }).catch(() => {
                     toast.error("Comanda não encontrada!");
@@ -160,8 +162,6 @@ export const CloseCheck = () => {
             totalValue: totalValueCalculed
         };
 
-        console.log(obj, cashier._id);
-
         try {
             CashierService.update(cashier._id, obj)
                 .then(() => {
@@ -176,7 +176,6 @@ export const CloseCheck = () => {
             return toast.error(error);
         };
     };
-
 
     const cancelCheck = () => {
         try {
