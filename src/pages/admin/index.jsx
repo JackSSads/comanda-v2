@@ -86,8 +86,7 @@ export const Admin = () => {
         try {
             CashierService.deleteById(checkId);
             CheckService.deleteAll();
-            CashierService.create();
-
+            CashierService.get();
             screenshotCashier();
         } catch (error) {
             return toast.error(error);
