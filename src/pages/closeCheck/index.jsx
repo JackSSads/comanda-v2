@@ -20,7 +20,7 @@ export const CloseCheck = () => {
         products: [],
         status: "",
         totalValue: "",
-        pagForm: "pix",
+        pagForm: "",
     });
 
     const [setting, setSetting] = useState({
@@ -43,14 +43,16 @@ export const CloseCheck = () => {
     }, []);
 
     useEffect(() => {
-        for (let i = 0; i < cashier.comandas.length; i++) {
+        if (cashier.comandas && cashier.comandas.length > 0) {
+            for (let i = 0; i < cashier.comandas.length; i++) {
 
-            // verificando se check já existe no cashier
-            if (cashier.comandas[i]._id === id) {
+                // verificando se check já existe no cashier
+                if (cashier.comandas[i]._id === id) {
 
-                const deleteCheck = cashier.comandas.filter(item => item._id !== id);
+                    const deleteCheck = cashier.comandas.filter(item => item._id !== id);
 
-                setCashier(deleteCheck);
+                    setCashier((prev) => ({ ...prev, comandas: deleteCheck }));
+                };
             };
         };
 
@@ -64,8 +66,8 @@ export const CloseCheck = () => {
             obs: check.obs
         };
 
-        setUnion(() => [...cashier.comandas, newCheck]);
-    }, []);
+        setUnion(() => [...(cashier.comandas || []), newCheck]);
+    }, [check, cashier]);
 
     useEffect(() => {
         getSetting();
@@ -144,19 +146,15 @@ export const CloseCheck = () => {
     const closeCheck = () => {
         editCheckStatus();
 
-        let totalValueCalculed = 0;
-
-        for (let i = 0; i < union.length; i++) {
-            let soma = union[i]["totalValue"];
-
-            totalValueCalculed += soma;
-        };
+        let totalValueCalculed = union.reduce((acc, item) => acc + item.totalValue, 0);
 
         const obj = {
-            comandas: union,
+            comandas: union, // Aqui estamos apenas passando as comandas.
             status: false,
             totalValue: totalValueCalculed
         };
+
+        console.log(obj, cashier._id);
 
         try {
             CashierService.update(cashier._id, obj)
@@ -172,6 +170,7 @@ export const CloseCheck = () => {
             return toast.error(error);
         };
     };
+
 
     const cancelCheck = () => {
         try {
