@@ -132,7 +132,7 @@ export const ManageUser = () => {
 
                     <div className="flex flex-col gap-1 mt-10 max-w-[300px]">
                         <h2 className="w-[300px] text-center p-2 border-2 rounded-md border-[#1C1D26] text-[#1C1D26] font-semibold"
-                        >Todos os usuários</h2>
+                        >Usuários cadastrados</h2>
 
                         <div className="mb-5 overflow-x-auto shadow-md sm:rounded-lg rounded-md">
                             <table className="w-[300px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
