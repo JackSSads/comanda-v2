@@ -46,10 +46,11 @@ export const NewCheck = () => {
                             socket.emit("nova_comanda", data);
                             setToggleView(false);
                             toast.success(result.message);
+                            setValue(prev => ({ ...prev, nameClient: "", obs: "" }));
+                        } else {
+                            toast.error(result.message);
+                            setLoading(false);
                         };
-
-                        setValue(prev => ({ ...prev, nameClient: "", obs: "" }));
-                        setLoading(false);
                     });
             } catch (error) {
                 return toast.error(error);
