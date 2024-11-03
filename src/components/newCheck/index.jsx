@@ -49,8 +49,8 @@ export const NewCheck = () => {
                             setValue(prev => ({ ...prev, nameClient: "", obs: "" }));
                         } else {
                             toast.error(result.message);
-                            setLoading(false);
                         };
+                        setLoading(false);
                     });
             } catch (error) {
                 return toast.error(error);
