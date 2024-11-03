@@ -20,8 +20,8 @@ export const ManageUser = () => {
     const [setting, setSetting] = useState({
         _id: "",
         establishmentName: "",
-        serviceCharge: "",
-        serviceChargePercentage: "",
+        serviceCharge: false,
+        serviceChargePercentage: 0,
         imagePix: ""
     });
 
@@ -95,13 +95,17 @@ export const ManageUser = () => {
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            setSetting((prev) => ({ ...prev, imagePix: reader.result }));
-        };
-
+        
         if (file) {
+            // Verifica se o tamanho do arquivo é maior que 5 mb
+            if (file.size > 5 * 1024 * 1024) {
+                return toast.error("A imagem deve ser menor que 5 MB.");
+            };
+    
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setSetting((prev) => ({ ...prev, imagePix: reader.result }));
+            };
             reader.readAsDataURL(file);
         };
     };
