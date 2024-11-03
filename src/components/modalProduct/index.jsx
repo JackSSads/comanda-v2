@@ -93,9 +93,9 @@ export const ModalProduct = ({ action, id }) => {
                 return toast.error(error);
             };
         } else {
-            setValue(prev => ({ ...prev, "nameProduct": "" }));
-            setValue(prev => ({ ...prev, "price": 0 }));
-            setValue(prev => ({ ...prev, "category": "Bebida" }));
+            setValue(prev => ({ ...prev, nameProduct: "" }));
+            setValue(prev => ({ ...prev, price: 0 }));
+            setValue(prev => ({ ...prev, category: "Bebida" }));
         }
     }, [id]);
 
@@ -130,7 +130,7 @@ export const ModalProduct = ({ action, id }) => {
                     <select className="w-[250px] border p-3 rounded-xl"
                         id={value.category}
                         name="category"
-                        value={value.category}                        
+                        value={value.category}                   
                         onChange={(category) => handleInput("category", category)}>
                         <option value={`Bebida`} >Bebida</option>
                         <option value={`Drink`} >Sucos & Drinks</option>
