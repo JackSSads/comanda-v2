@@ -158,7 +158,7 @@ export const CloseCheck = () => {
         };
 
         const obj = {
-            comandas: union, // Aqui estamos apenas passando as comandas.
+            comandas: union,
             status: false,
             totalValue: totalValueCalculed
         };
@@ -181,16 +181,17 @@ export const CloseCheck = () => {
     const cancelCheck = () => {
         try {
             let totalValueCalculed = 0;
-
-            for (let i = 0; i < cashier.length; i++) {
-                let soma = cashier[i]["totalValue"];
-
+            
+            for (let i = 0; i < cashier.comandas.length; i++) {
+                let soma = cashier.comandas[i]["totalValue"];
+                
                 totalValueCalculed += soma;
             };
 
+
             const obj = {
                 _id: cashier._id,
-                comandas: cashier,
+                comandas: cashier.comandas,
                 totalValue: totalValueCalculed,
                 status: false
             };
