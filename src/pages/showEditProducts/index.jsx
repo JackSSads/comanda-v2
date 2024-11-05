@@ -116,21 +116,21 @@ export const ShowEditProducts = () => {
                 ))}
 
                 {totalPages > 1 && (
-                    <div className="flex gap-3 mt-5">
+                    <div className="flex items-center gap-3 mt-5">
                         <button
-                            className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                            className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] bg-[#1C1D26] transition-all delay-75"
                             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
-                        >
-                            Anterior
+                        >Anterior
                         </button>
+
                         <span>{currentPage} de {totalPages}</span>
+                        
                         <button
-                            className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                            className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] bg-[#1C1D26] transition-all delay-75"
                             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                        >
-                            Próxima
+                        >Próxima
                         </button>
                     </div>
                 )}

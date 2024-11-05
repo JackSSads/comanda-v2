@@ -215,7 +215,7 @@ export const ListingProduts = () => {
                 <div className="fixed bottom-0 flex items-center justify-center w-full bg-[#EB8F00] p-1 text-center text-slate-100">
                     <div className="flex flex-col w-2/3">
                         {addProductsTiket.length ? (
-                            <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> produtos</h5>
+                            <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> {addProductsTiket.length > 1? "itens" : "item"}</h5>
                         ) : (
                             <h5 className="text-xl my-3">Adicione produtos</h5>
                         )}
@@ -224,7 +224,7 @@ export const ListingProduts = () => {
                             onClick={() => { postProducts(); setToggleView(false) }}
                         >Adicionar</button>
                     </div>
-                    {currentItems.length > 0 &&
+                    {addProductsTiket.length > 0 &&
                         <button className="fixed bottom-1 right-1" onClick={() => setToggleView(!toggleView)}
                         ><ClipBoard /></button>
                     }
@@ -246,7 +246,9 @@ export const ListingProduts = () => {
                 </div>
 
                 {currentItems.map((item, index) => (
-                    <div key={index} className="flex justify-between items-center px-3 py-1 w-full rounded-xl shadow-md">
+                    <div key={index} className={`
+                    ${addProductsTiket.findIndex(product => product._id === item._id) !== -1 ? "bg-green-100/30" : ""}
+                    flex justify-between items-center px-3 py-1 w-full rounded-xl shadow-md`}>
 
                         <div className="w-2/3 flex flex-col items-start">
                             <h3 className="text-slate-900 font-bold">{item.nameProduct}</h3>
@@ -291,21 +293,21 @@ export const ListingProduts = () => {
                 ))}
 
                 {totalPages > 1 && (
-                    <div className="flex gap-3 mt-5">
+                    <div className="flex items-center gap-3 mt-5">
                         <button
-                            className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                            className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] bg-[#1C1D26] transition-all delay-75"
                             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
-                        >
-                            Anterior
+                        >Anterior
                         </button>
+
                         <span>{currentPage} de {totalPages}</span>
+
                         <button
-                            className="px-3 py-1 border rounded-lg hover:bg-slate-200"
+                            className="font-semibold text-white py-2 px-5 rounded-md hover:bg-[#EB8F00] bg-[#1C1D26] transition-all delay-75"
                             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                        >
-                            Próxima
+                        >Próxima
                         </button>
                     </div>
                 )}
