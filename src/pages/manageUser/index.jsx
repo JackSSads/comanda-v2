@@ -136,7 +136,7 @@ export const ManageUser = () => {
 
                     <div className="flex flex-col gap-1 mt-10 max-w-[300px]">
                         <h2 className="w-[300px] text-center p-2 border-2 rounded-md border-[#1C1D26] text-[#1C1D26] font-semibold"
-                        >Usuários cadastrados</h2>
+                        >Usuários</h2>
 
                         <div className="mb-5 overflow-x-auto shadow-md sm:rounded-lg rounded-md">
                             <table className="w-[300px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -193,11 +193,11 @@ export const ManageUser = () => {
                     ><Plus />Cadastrar usuário</button>
                 </div>
 
-                <div className="">
+                <div>
                     <h2 className="w-[300px] text-center p-2 border-2 rounded-md border-[#1C1D26] text-[#1C1D26] font-semibold"
                     >Configurações</h2>
 
-                    <div className="mt-5 flex flex-col gap-1">
+                    <div className="mt-5 flex flex-col gap-6">
                         <label className="text-slate-700 text-sm font-bold mb-2 flex flex-col">
                             Nome do Estabelecimento
                             <input
