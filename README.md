@@ -6,6 +6,7 @@ Aplicação React desenvolvida para gerenciar comandas e pedidos de bares e rest
     • React
     • Axios
     • Tailwindcss
+    • Socket.io Client
 
 ## Configuração do Ambiente
 
