@@ -2,6 +2,12 @@
 
 Aplicação React desenvolvida para gerenciar comandas e pedidos de bares e restaurantes de pequeno porte. Abaixo está a estrutura do projeto e uma descrição de cada componente e serviço.
 
+## Dependências do projeto
+    • React
+    • Axios
+    • Tailwindcss
+    • Socket.io Client
+
 ## Configuração do Ambiente
 
 1. Clone este repositório:
