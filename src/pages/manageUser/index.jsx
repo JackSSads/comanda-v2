@@ -33,8 +33,8 @@ export const ManageUser = () => {
         getSetting();
     }, []);
 
-    const getSetting = useCallback(() => {
-        SettingService.get()
+    const getSetting = useCallback(async () => {
+        await SettingService.get()
             .then((result) => {
                 setSetting(result);
             })
