@@ -41,7 +41,7 @@ export const ManageUser = () => {
             .catch((error) => { return toast.error(error) });
     }, []);
 
-    const updateSetting = useCallback(() => {
+    const updateSetting = useCallback(async () => {
         const payload = {
             _id: setting._id,
             establishmentName: setting.establishmentName,
@@ -54,7 +54,7 @@ export const ManageUser = () => {
             return toast.error("Configurações não carregadas.");
         };
 
-        SettingService.update(payload)
+        await SettingService.update(payload)
             .then((result) => {
                 setSetting(result.data);
                 toast.success(result.message);
@@ -62,9 +62,9 @@ export const ManageUser = () => {
             .catch((error) => { return toast.error(error) });
     }, [setting]);
 
-    const getAllUsers = useCallback(() => {
+    const getAllUsers = useCallback(async () => {
         try {
-            UsuarioService.getAll()
+            await UsuarioService.getAll()
                 .then((result) => {
                     setListUser(result.data);
                 })
@@ -74,9 +74,9 @@ export const ManageUser = () => {
         };
     }, []);
 
-    const deleteUser = (_id) => {
+    const deleteUser = async (_id) => {
         try {
-            UsuarioService.deleteById(_id)
+            await UsuarioService.deleteById(_id)
                 .then((result) => {
                     toast.success(`${result.message}`);
                     getAllUsers()

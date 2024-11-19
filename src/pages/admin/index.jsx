@@ -30,9 +30,9 @@ export const Admin = () => {
         setData(today)
     }, []);
 
-    const getAllCashier = useCallback(() => {
+    const getAllCashier = useCallback(async() => {
         try {
-            CashierService.get()
+            await CashierService.get()
                 .then((result) => {
                     setCheckId(result.data._id || 0);
                     setLengthCheck(result.data.comandas.length || 0);
@@ -82,7 +82,6 @@ export const Admin = () => {
     }, []);
 
     const closeCashier = () => {
-
         try {
             CashierService.deleteById(checkId);
             CheckService.deleteAll();

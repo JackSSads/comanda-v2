@@ -151,21 +151,24 @@ export const Waiter = () => {
         try {
             await CheckService.getById(id)
                 .then((result) => {
-                    setClient(result.data.nameClient);
-                    setListProducts(result.data.products);
-                    setTotalPrice(parseFloat(result.data.totalValue).toFixed(2).replace(".", ","));
+                    if (result.data?._id) {
 
-                    // verificando status da comanda
-                    if (!result.data.status) {
-                        setCheckStatus(false);
+                        setClient(result.data.nameClient);
+                        setListProducts(result.data.products);
+                        setTotalPrice(parseFloat(result.data.totalValue).toFixed(2).replace(".", ","));
+
+                        // verificando status da comanda
+                        if (!result.data.status) {
+                            setCheckStatus(false);
+                        };
+                    } else {
+                        toast.error("Comanda não encontrada!");
+                        return navigate(-1);
                     };
-                }).catch(() => {
-                    toast.error("Comanda não encontrada!");
-                    return navigate("/garcom/comandas");
                 });
-
         } catch (error) {
-            return toast.error(error);
+            toast.error(error);
+            return navigate(-1);
         };
     }, []);
 
@@ -204,9 +207,8 @@ export const Waiter = () => {
                     setTotalPrice(newTotalPrice.toFixed(2).replace(".", ","));
                 })
                 .catch((error) => { toast.error(error) });
-
         } catch (error) {
-            toast.error("Ocorreu um erro inesperado!");
+            return toast.error("Ocorreu um erro inesperado!");
         };
     };
 
@@ -238,7 +240,7 @@ export const Waiter = () => {
             socket.emit("produto_removido", dataN);
 
         } catch (error) {
-            toast.error("Ocorreu um erro inesperado!");
+            return toast.error("Ocorreu um erro inesperado!");
         };
     };
 

@@ -76,40 +76,43 @@ export const CloseCheck = () => {
         getSetting();
     }, []);
 
-    const getSetting = useCallback(() => {
-        SettingService.get()
+    const getSetting = useCallback(async () => {
+        await SettingService.get()
             .then((result) => {
                 setSetting(result);
             });
     }, []);
 
-    const getCheck = useCallback(() => {
+    const getCheck = useCallback(async () => {
         try {
-            CheckService.getById(id)
+            await CheckService.getById(id)
                 .then((result) => {
-                    setCheck((prev) => ({
-                        ...prev,
-                        _id: result.data._id,
-                        nameClient: result.data.nameClient,
-                        obs: result.data.obs,
-                        products: result.data.products,
-                        status: result.data.status,
-                        totalValue: result.data.totalValue,
-                        pagForm: result.data.pagForm ? result.data.pagForm : "pix"
-                    }));
-                    setDisabledButton(false);
-                }).catch(() => {
-                    toast.error("Comanda não encontrada!");
-                    return navigate("/garcom/comandas");
+                    if (result.data?._id) {
+                        setCheck((prev) => ({
+                            ...prev,
+                            _id: result.data._id,
+                            nameClient: result.data.nameClient,
+                            obs: result.data.obs,
+                            products: result.data.products,
+                            status: result.data.status,
+                            totalValue: result.data.totalValue,
+                            pagForm: result.data.pagForm ? result.data.pagForm : "pix"
+                        }));
+                        setDisabledButton(false);
+                    } else {
+                        toast.error("Comanda não encontrada!");
+                        return navigate(-1);
+                    };
                 });
         } catch (error) {
-            return toast.error(error);
+            toast.error(error);
+            return navigate(-1);
         };
     }, [id]);
 
-    const getCashier = useCallback(() => {
+    const getCashier = useCallback(async () => {
         try {
-            CashierService.get()
+            await CashierService.get()
                 .then((result) => {
                     setCashier((prev) => ({
                         ...prev,
@@ -118,7 +121,8 @@ export const CloseCheck = () => {
                     }));
                 });
         } catch (error) {
-            return toast.error(error);
+            toast.error(error);
+            return navigate(-1);
         };
     }, []);
 
@@ -142,7 +146,8 @@ export const CloseCheck = () => {
                     toast.error("Ocorreu um erro na comunicação com o DB");
                 });
         } catch (error) {
-            return toast.error(error);
+            toast.error(error);
+            return navigate(-1);
         };
     };
 
@@ -168,9 +173,9 @@ export const CloseCheck = () => {
                 .then(() => {
                     if (check.status) {
                         socket.emit("comanda_finalizada", check.nameClient);
-                        navigate("/garcom/comandas");
+                        navigate(-2);
                     } else {
-                        navigate("/comandasFinalizadas");
+                        navigate(-2);
                     };
                 });
         } catch (error) {
@@ -181,10 +186,10 @@ export const CloseCheck = () => {
     const cancelCheck = () => {
         try {
             let totalValueCalculed = 0;
-            
+
             for (let i = 0; i < cashier.comandas.length; i++) {
                 let soma = cashier.comandas[i]["totalValue"];
-                
+
                 totalValueCalculed += soma;
             };
 
@@ -204,9 +209,9 @@ export const CloseCheck = () => {
 
             if (check.status) {
                 socket.emit("comanda_cancelada", { comanda_id, id });
-                navigate("/garcom/comandas");
+                navigate(-2);
             } else {
-                navigate("/comandasFinalizadas");
+                navigate(-2);
             };
 
         } catch (error) {

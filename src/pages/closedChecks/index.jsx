@@ -16,15 +16,15 @@ export const ClosedChecks = () => {
         getAllChecks();
     }, []);
 
-    const getAllChecks = useCallback(() => {
+    const getAllChecks = useCallback(async () => {
         try {
-            CheckService.getAll()
-                .then((result) => { setRows(result.data) });
+            await CheckService.getAll()
+                .then((result) => { setRows(result.data || []) });
         } catch (error) {
-            navigate("/admin");
+            navigate(-1);
             return toast.error(error);
         };
-    }, []);
+    }, [rows]);
 
     useEffect(() => {
         listAllCheckOpen();
@@ -49,7 +49,7 @@ export const ClosedChecks = () => {
                 listCheck.push(data);
             };
         });
-        setHasCheckWhitOpen(listCheck);
+        setHasCheckWhitOpen(listCheck || []);
     };
 
     return (

@@ -49,9 +49,9 @@ export const ListingProduts = () => {
         setNewProductsInComanda();
     }, [addProductsTiket, getProductComanda]);
 
-    const getAllProducts = useCallback(() => {
+    const getAllProducts = useCallback(async () => {
         try {
-            ProdutService.getAll()
+           await ProdutService.getAll()
                 .then((result) => { setListProducts(result.data) })
                 .catch((error) => { return toast.error(error); });
         } catch (error) {
@@ -59,9 +59,9 @@ export const ListingProduts = () => {
         };
     }, []);
 
-    const getCheckById = useCallback(() => {
+    const getCheckById = useCallback(async () => {
         try {
-            CheckService.getById(id)
+            await CheckService.getById(id)
                 .then((result) => {
                     setClient(result.data.nameClient);
                     setGetProductComanda(result.data.products);
@@ -184,10 +184,10 @@ export const ListingProduts = () => {
         }
 
         try {
-            CheckService.updateById(id, data)
+            await CheckService.updateById(id, data)
                 .then(() => {
                     socket.emit("novo_pedido", objSocket);
-                    navigate(`/garcom/comanda/${id}`);
+                    navigate(-1);
                 })
                 .catch((error) => { return toast.error(`Ocorreu um erro inesperado! ${error}`); });
 
@@ -215,7 +215,7 @@ export const ListingProduts = () => {
                 <div className="fixed bottom-0 flex items-center justify-center w-full bg-[#EB8F00] p-1 text-center text-slate-100">
                     <div className="flex flex-col w-2/3">
                         {addProductsTiket.length ? (
-                            <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> {addProductsTiket.length > 1? "itens" : "item"}</h5>
+                            <h5 className="text-xl my-3"><span className="font-bold">{addProductsTiket.length}</span> {addProductsTiket.length > 1 ? "itens" : "item"}</h5>
                         ) : (
                             <h5 className="text-xl my-3">Adicione produtos</h5>
                         )}

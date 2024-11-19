@@ -34,9 +34,9 @@ export const ShowEditProducts = () => {
         };
     }, []);
 
-    const deleteById = (_id) => {
+    const deleteById = async (_id) => {
         try {
-            ProdutService.deleteById(_id)
+            await ProdutService.deleteById(_id)
                 .then((result) => {
                     if (result.status) {
                         getAllProducts();

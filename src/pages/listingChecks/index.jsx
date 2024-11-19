@@ -144,9 +144,9 @@ export const ListingChecks = () => {
         return () => { socket.off("comanda_cancelada") };
     }, []);
 
-    const handleChecks = useCallback(() => {
+    const handleChecks = useCallback(async () => {
         try {
-            CheckService.getAll()
+            await CheckService.getAll()
                 .then((result) => { setRows(result.data) })
                 .catch((error) => { return toast.error(error); });
         } catch (error) {
